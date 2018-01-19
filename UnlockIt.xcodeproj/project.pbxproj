@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8430C52A2010933F00BDB200 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5292010933F00BDB200 /* AppDelegate.m */; };
-		8430C52D2010933F00BDB200 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C52C2010933F00BDB200 /* ViewController.m */; };
+		8430C52D2010933F00BDB200 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C52C2010933F00BDB200 /* MainViewController.m */; };
 		8430C5302010933F00BDB200 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8430C52E2010933F00BDB200 /* Main.storyboard */; };
 		8430C5332010933F00BDB200 /* UnlockIt.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5312010933F00BDB200 /* UnlockIt.xcdatamodeld */; };
 		8430C5352010933F00BDB200 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8430C5342010933F00BDB200 /* Assets.xcassets */; };
@@ -16,6 +16,20 @@
 		8430C53B2010933F00BDB200 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C53A2010933F00BDB200 /* main.m */; };
 		8430C5452010933F00BDB200 /* UnlockItTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5442010933F00BDB200 /* UnlockItTests.m */; };
 		8430C5502010933F00BDB200 /* UnlockItUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C54F2010933F00BDB200 /* UnlockItUITests.m */; };
+		8430C55F201093EC00BDB200 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8430C55E201093EC00BDB200 /* CoreBluetooth.framework */; };
+		8430C5622010956900BDB200 /* BluetoothModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5612010956900BDB200 /* BluetoothModule.m */; };
+		8430C5672010CE7000BDB200 /* MainViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5662010CE7000BDB200 /* MainViewPresenter.m */; };
+		8430C5682010CE7000BDB200 /* MainViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5662010CE7000BDB200 /* MainViewPresenter.m */; };
+		8430C5692010CE7000BDB200 /* MainViewPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5662010CE7000BDB200 /* MainViewPresenter.m */; };
+		8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8430C56B2010EAFC00BDB200 /* Images.xcassets */; };
+		8430C56D2010EAFC00BDB200 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8430C56B2010EAFC00BDB200 /* Images.xcassets */; };
+		8430C56E2010EAFC00BDB200 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8430C56B2010EAFC00BDB200 /* Images.xcassets */; };
+		8430C5712011FF3700BDB200 /* PeripheralsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5702011FF3700BDB200 /* PeripheralsView.m */; };
+		8430C5722011FF3700BDB200 /* PeripheralsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5702011FF3700BDB200 /* PeripheralsView.m */; };
+		8430C5732011FF3700BDB200 /* PeripheralsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5702011FF3700BDB200 /* PeripheralsView.m */; };
+		8430C57620122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
+		8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
+		8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +53,8 @@
 		8430C5252010933F00BDB200 /* UnlockIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnlockIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8430C5282010933F00BDB200 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8430C5292010933F00BDB200 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		8430C52B2010933F00BDB200 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8430C52C2010933F00BDB200 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8430C52B2010933F00BDB200 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		8430C52C2010933F00BDB200 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		8430C52F2010933F00BDB200 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8430C5322010933F00BDB200 /* UnlockIt.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UnlockIt.xcdatamodel; sourceTree = "<group>"; };
 		8430C5342010933F00BDB200 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -53,6 +67,17 @@
 		8430C54B2010933F00BDB200 /* UnlockItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnlockItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8430C54F2010933F00BDB200 /* UnlockItUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UnlockItUITests.m; sourceTree = "<group>"; };
 		8430C5512010933F00BDB200 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8430C55E201093EC00BDB200 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		8430C5602010956900BDB200 /* BluetoothModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BluetoothModule.h; sourceTree = "<group>"; };
+		8430C5612010956900BDB200 /* BluetoothModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BluetoothModule.m; sourceTree = "<group>"; };
+		8430C5652010CE7000BDB200 /* MainViewPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewPresenter.h; sourceTree = "<group>"; };
+		8430C5662010CE7000BDB200 /* MainViewPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewPresenter.m; sourceTree = "<group>"; };
+		8430C56A2010D02900BDB200 /* ViewControllerProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewControllerProtocol.h; sourceTree = "<group>"; };
+		8430C56B2010EAFC00BDB200 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		8430C56F2011FF3700BDB200 /* PeripheralsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralsView.h; sourceTree = "<group>"; };
+		8430C5702011FF3700BDB200 /* PeripheralsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralsView.m; sourceTree = "<group>"; };
+		8430C57420122C7E00BDB200 /* PeripheralInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralInfoCell.h; sourceTree = "<group>"; };
+		8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralInfoCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430C55F201093EC00BDB200 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,6 +113,7 @@
 				8430C5432010933F00BDB200 /* UnlockItTests */,
 				8430C54E2010933F00BDB200 /* UnlockItUITests */,
 				8430C5262010933F00BDB200 /* Products */,
+				8430C55D201093EC00BDB200 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,11 +130,17 @@
 		8430C5272010933F00BDB200 /* UnlockIt */ = {
 			isa = PBXGroup;
 			children = (
+				8430C57920124C9400BDB200 /* MainView */,
+				8430C5602010956900BDB200 /* BluetoothModule.h */,
+				8430C5612010956900BDB200 /* BluetoothModule.m */,
 				8430C5282010933F00BDB200 /* AppDelegate.h */,
 				8430C5292010933F00BDB200 /* AppDelegate.m */,
-				8430C52B2010933F00BDB200 /* ViewController.h */,
-				8430C52C2010933F00BDB200 /* ViewController.m */,
 				8430C52E2010933F00BDB200 /* Main.storyboard */,
+				8430C57420122C7E00BDB200 /* PeripheralInfoCell.h */,
+				8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */,
+				8430C56F2011FF3700BDB200 /* PeripheralsView.h */,
+				8430C5702011FF3700BDB200 /* PeripheralsView.m */,
+				8430C56B2010EAFC00BDB200 /* Images.xcassets */,
 				8430C5342010933F00BDB200 /* Assets.xcassets */,
 				8430C5362010933F00BDB200 /* LaunchScreen.storyboard */,
 				8430C5392010933F00BDB200 /* Info.plist */,
@@ -133,6 +166,26 @@
 				8430C5512010933F00BDB200 /* Info.plist */,
 			);
 			path = UnlockItUITests;
+			sourceTree = "<group>";
+		};
+		8430C55D201093EC00BDB200 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8430C55E201093EC00BDB200 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8430C57920124C9400BDB200 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				8430C56A2010D02900BDB200 /* ViewControllerProtocol.h */,
+				8430C52B2010933F00BDB200 /* MainViewController.h */,
+				8430C52C2010933F00BDB200 /* MainViewController.m */,
+				8430C5652010CE7000BDB200 /* MainViewPresenter.h */,
+				8430C5662010CE7000BDB200 /* MainViewPresenter.m */,
+			);
+			path = MainView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,6 +256,11 @@
 					8430C5242010933F00BDB200 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					8430C53F2010933F00BDB200 = {
 						CreatedOnToolsVersion = 9.2;
@@ -242,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8430C5382010933F00BDB200 /* LaunchScreen.storyboard in Resources */,
+				8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */,
 				8430C5352010933F00BDB200 /* Assets.xcassets in Resources */,
 				8430C5302010933F00BDB200 /* Main.storyboard in Resources */,
 			);
@@ -251,6 +310,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430C56D2010EAFC00BDB200 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +318,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430C56E2010EAFC00BDB200 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,10 +329,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8430C52D2010933F00BDB200 /* ViewController.m in Sources */,
+				8430C5672010CE7000BDB200 /* MainViewPresenter.m in Sources */,
+				8430C52D2010933F00BDB200 /* MainViewController.m in Sources */,
 				8430C5332010933F00BDB200 /* UnlockIt.xcdatamodeld in Sources */,
 				8430C53B2010933F00BDB200 /* main.m in Sources */,
+				8430C5622010956900BDB200 /* BluetoothModule.m in Sources */,
+				8430C5712011FF3700BDB200 /* PeripheralsView.m in Sources */,
 				8430C52A2010933F00BDB200 /* AppDelegate.m in Sources */,
+				8430C57620122C7E00BDB200 /* PeripheralInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,7 +344,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430C5722011FF3700BDB200 /* PeripheralsView.m in Sources */,
+				8430C5682010CE7000BDB200 /* MainViewPresenter.m in Sources */,
 				8430C5452010933F00BDB200 /* UnlockItTests.m in Sources */,
+				8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,7 +355,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8430C5732011FF3700BDB200 /* PeripheralsView.m in Sources */,
+				8430C5692010CE7000BDB200 /* MainViewPresenter.m in Sources */,
 				8430C5502010933F00BDB200 /* UnlockItUITests.m in Sources */,
+				8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -437,6 +508,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GQFGK5478M;
 				INFOPLIST_FILE = UnlockIt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eCozy.UnlockIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -451,6 +523,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GQFGK5478M;
 				INFOPLIST_FILE = UnlockIt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = eCozy.UnlockIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
