@@ -11,7 +11,7 @@
 #import "BluetoothModule.h"
 #import "MainViewPresenter.h"
 #import "PeripheralsView.h"
-#import "KnownDeviceTableCell.h"
+
 
 @interface MainViewController ()
 
@@ -102,33 +102,26 @@
    //if ( state && automaticStartScanForBLE )
   //      [self startScan];
     if ( state )
-        [self startScanForKnownDevices];
+        [self startScan];
         
        
 }
 
 -(void)startScan {
-    [self performSegueWithIdentifier:@"SegueToPeripheralView" sender:self];
+    //[self performSegueWithIdentifier:@"SegueToPeripheralView" sender:self];
     
-   // [[BluetoothModule SharedBluetoothModule] startScan];
+    [[BluetoothModule SharedBluetoothModule] startScan:YES];
     
     
     
 }
 
+/*
 -(BOOL)startScanForKnownDevices {
     BOOL result = NO;
     if ( [[BluetoothModule SharedBluetoothModule] isBluetoothReady] ) {
         if ( [devicesArray count] > 0 ) {
-            /*
-            NSMutableArray *scanDevices = [[NSMutableArray alloc] init];
-            for ( NSMutableDictionary *dictionary in devicesArray ) {
-                CBUUID *uuid = [CBUUID UUIDWithString:dictionary[@"UUID"]];
-                [scanDevices addObject:uuid];
-                break;
-                
-            }
-             */
+
             Byte uuid[2];
 
             uuid[0] = 0x18;
@@ -144,12 +137,13 @@
     }
     return result;
 }
-
+*/
 -(void)stopScan {
     [[BluetoothModule SharedBluetoothModule] stopScan];
 }
 
-- (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue sender:(id)sender {
+/*
+ - (IBAction)prepareForUnwind:(UIStoryboardSegue *)segue sender:(id)sender {
 
     
     [[NSNotificationCenter defaultCenter] addObserver: self
@@ -162,8 +156,10 @@
                                                  name: @"UpdateRSSI"
                                                object: nil];
     [self startScanForKnownDevices];
-}
 
+}
+ */
+/*
 - (void)prepareForSegue:(UIStoryboardSegue *)segue
                  sender:(id)sender {
     [[NSNotificationCenter defaultCenter] removeObserver: self
@@ -173,11 +169,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                  name: @"UpdateRSSI"
                                                object: nil];
+ 
    // if ( [segue.identifier  isEqual: @"SegueToPeripheralView"] )
    //     [[BluetoothModule SharedBluetoothModule] startScan:nil];
 
 }
-
+*/
 -(void)onDiscoverPeripheral:(NSNotification *)data {
     
     CBPeripheral *peripheral = data.object;
@@ -232,7 +229,7 @@
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     int numberOfRows = 0;
     for ( NSMutableDictionary *dictionary in devicesArray ) {
-        if ( ![dictionary[@"active"] isEqual:[NSNull null]] && [dictionary[@"active"] isEqual:@YES] )
+      //  if ( ![dictionary[@"active"] isEqual:[NSNull null]] && [dictionary[@"active"] isEqual:@YES] )
             numberOfRows++;
     }
     return numberOfRows;
@@ -244,6 +241,8 @@
     UITableViewCell *cell = nil;
     if ( indexPath.row < [devicesArray count]) {
         KnownDeviceTableCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"knownDeviceTableCell"];
+        tableCell.numberOfDataRow = (int)indexPath.row;
+        tableCell.delegate = self;
         NSDictionary *dict = [devicesArray objectAtIndex:indexPath.row];
         [tableCell.storedName setText:dict[@"Name"]];
         [tableCell.storedName sizeToFit];
@@ -262,6 +261,84 @@
     [[BluetoothModule SharedBluetoothModule] unlockIt:cell.storedUUID.text];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+       // [_objects removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        NSLog(@"Unhandled editing style! %d", editingStyle);
+    }
+}
+
+- (void)onDeleteButtonPressed:(int)numInDataRow {
+    NSLog(@"delete button pressed %d", numInDataRow);
+    [self showDeleteAlertForLock:numInDataRow];
+
+    
+}
+
+- (void)onRenameButtonPressed:(int)numInDataRow {
+    NSLog(@"rename button pressed %d", numInDataRow);
+    [self showAlertWithInputNameForPeripheral:numInDataRow];
+}
+
+-(void)showAlertWithInputNameForPeripheral:(int)numberOfDataRow {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Input name for the lock" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        NSMutableDictionary *dictionary = [devicesArray objectAtIndex:numberOfDataRow];
+        textField.text = dictionary[@"Name"];
+        textField.placeholder = @"Name";
+        textField.secureTextEntry = NO;
+        
+        
+    }];
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSMutableDictionary *dictionary = [devicesArray objectAtIndex:numberOfDataRow];
+        dictionary[@"Name"] = [[alertController textFields][0] text];
+        [self.knownDevicesTable reloadData];
+        [[[NSUserDefaults alloc] init] setObject:devicesArray forKey:@"savedArray"];
+        
+        
+    }];
+    [alertController addAction:confirmAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"Canelled");
+    }];
+    
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+
+-(void)showDeleteAlertForLock:(int)numberOfDataRow {
+    NSMutableDictionary *dictionary = [devicesArray objectAtIndex:numberOfDataRow];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle: dictionary[@"Name"] message:@"Do you really want to forget this lock?"  preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [devicesArray removeObjectAtIndex:numberOfDataRow];
+        [self.knownDevicesTable reloadData];
+
+        
+        
+    }];
+    [alertController addAction:confirmAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        NSLog(@"Canelled");
+    }];
+    
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 
 
 /*

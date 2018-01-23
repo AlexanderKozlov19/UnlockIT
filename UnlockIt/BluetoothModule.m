@@ -12,6 +12,7 @@
 
 @implementation BluetoothModule {
     BOOL isScanning;
+    BOOL scanOnlyForLocks;
 }
 
 @synthesize peripheralsBLE;
@@ -37,6 +38,7 @@
 
 -(id)init {
     isScanning = false;
+    scanOnlyForLocks = false;
     
     peripheralsBLE = [[NSMutableArray alloc] init];
     
@@ -57,6 +59,9 @@
 
 - (void) centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
     
+    if ( scanOnlyForLocks && ( ![peripheral.name isEqualToString:@"Servo Control"] ) )
+        return;
+    
     BOOL isPeripheralExist = false;
     
     for ( NSMutableDictionary *dictionary in peripheralsBLE ) {
@@ -66,13 +71,11 @@
         }
     }
     
-    
-    
     if ( !isPeripheralExist ) {
         NSLog(@"bluetooth manager diddiscover: %@, UUID = %@", peripheral.name, peripheral.identifier.UUIDString);
         [peripheral setDelegate:self];
-        //if ( [peripheral.name isEqualToString:@"Servo Control"])
-            [central connectPeripheral:peripheral options:nil];
+ 
+        [central connectPeripheral:peripheral options:nil];
         
         NSMutableDictionary *peripheralDict = [[NSMutableDictionary alloc] init];
         [peripheralDict setObject:peripheral forKey:@"CBPeripheral"];
@@ -110,10 +113,7 @@
 #pragma mark - Peripheral Delegates
 - (void) peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     for ( CBService *service in peripheral.services ) {
-        CBUUID *cbuuid = service.UUID;
-        NSString *string = service.UUID.UUIDString;
-        NSData *data = service.UUID.data;
-        NSLog(@"service %@", service.UUID.UUIDString);
+
         [peripheral discoverCharacteristics:nil forService:service];
     }
     
@@ -171,16 +171,18 @@
     return ( centralManager.state == CBManagerStatePoweredOn );
 }
 
--(void)startScan:(NSArray *)devices {
+-(void)startScan:(BOOL)onlyLocks {
     if ( isScanning )
         [self stopScan];
     
     [peripheralsBLE removeAllObjects];
     
-    [centralManager scanForPeripheralsWithServices:devices options:nil];
+    scanOnlyForLocks = onlyLocks;
+    
+    [centralManager scanForPeripheralsWithServices:nil options:nil];
     isScanning = YES;
     
-    NSLog(@"Bluetooth: startScan: %@", [devices description]);
+    NSLog(@"Bluetooth: startScan");
     
 }
 

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "ViewControllerProtocol.h"
+#import "KnownDeviceTableCell.h"
 
-@interface MainViewController : UIViewController <ViewControllerProtocol, UITableViewDataSource, UITableViewDelegate>
+@interface MainViewController : UIViewController <ViewControllerProtocol, UITableViewDataSource, UITableViewDelegate, SwipeableCellDelegate>
 
 -(void)updateBluetoothState:(BOOL)state withText:(NSString*)stateText;
 @property (weak, nonatomic) IBOutlet UIImageView *statusImage;

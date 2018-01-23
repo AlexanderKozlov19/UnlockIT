@@ -18,7 +18,7 @@
 -(BOOL)isBluetoothReady;
 
 
--(void)startScan:(NSArray *)devices;
+-(void)startScan:(BOOL)onlyLocks;
 -(void)stopScan;
 
 -(void)unlockIt:(NSString*)uuid;
