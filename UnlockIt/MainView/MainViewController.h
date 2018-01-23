@@ -9,14 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "ViewControllerProtocol.h"
 
-@interface MainViewController : UIViewController <ViewControllerProtocol>
+@interface MainViewController : UIViewController <ViewControllerProtocol, UITableViewDataSource, UITableViewDelegate>
 
 -(void)updateBluetoothState:(BOOL)state withText:(NSString*)stateText;
 @property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
+@property (strong, nonatomic) NSMutableDictionary *dictionaryDevices;
+@property (weak, nonatomic) IBOutlet UITableView *knownDevicesTable;
 
 -(void)startScan;
 -(void)stopScan;
+
 
 
 @end

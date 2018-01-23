@@ -30,6 +30,7 @@
 		8430C57620122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
+		8430C5BC2016143200BDB200 /* KnownDeviceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,8 @@
 		8430C5702011FF3700BDB200 /* PeripheralsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralsView.m; sourceTree = "<group>"; };
 		8430C57420122C7E00BDB200 /* PeripheralInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeripheralInfoCell.h; sourceTree = "<group>"; };
 		8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralInfoCell.m; sourceTree = "<group>"; };
+		8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KnownDeviceTableCell.h; path = UnlockIt/MainView/KnownDeviceTableCell.h; sourceTree = SOURCE_ROOT; };
+		8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KnownDeviceTableCell.m; path = UnlockIt/MainView/KnownDeviceTableCell.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,16 +133,13 @@
 		8430C5272010933F00BDB200 /* UnlockIt */ = {
 			isa = PBXGroup;
 			children = (
+				8430C5B92015FB2D00BDB200 /* PeripheralView */,
 				8430C57920124C9400BDB200 /* MainView */,
 				8430C5602010956900BDB200 /* BluetoothModule.h */,
 				8430C5612010956900BDB200 /* BluetoothModule.m */,
 				8430C5282010933F00BDB200 /* AppDelegate.h */,
 				8430C5292010933F00BDB200 /* AppDelegate.m */,
 				8430C52E2010933F00BDB200 /* Main.storyboard */,
-				8430C57420122C7E00BDB200 /* PeripheralInfoCell.h */,
-				8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */,
-				8430C56F2011FF3700BDB200 /* PeripheralsView.h */,
-				8430C5702011FF3700BDB200 /* PeripheralsView.m */,
 				8430C56B2010EAFC00BDB200 /* Images.xcassets */,
 				8430C5342010933F00BDB200 /* Assets.xcassets */,
 				8430C5362010933F00BDB200 /* LaunchScreen.storyboard */,
@@ -179,6 +179,8 @@
 		8430C57920124C9400BDB200 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
+				8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */,
+				8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */,
 				8430C56A2010D02900BDB200 /* ViewControllerProtocol.h */,
 				8430C52B2010933F00BDB200 /* MainViewController.h */,
 				8430C52C2010933F00BDB200 /* MainViewController.m */,
@@ -186,6 +188,17 @@
 				8430C5662010CE7000BDB200 /* MainViewPresenter.m */,
 			);
 			path = MainView;
+			sourceTree = "<group>";
+		};
+		8430C5B92015FB2D00BDB200 /* PeripheralView */ = {
+			isa = PBXGroup;
+			children = (
+				8430C57420122C7E00BDB200 /* PeripheralInfoCell.h */,
+				8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */,
+				8430C56F2011FF3700BDB200 /* PeripheralsView.h */,
+				8430C5702011FF3700BDB200 /* PeripheralsView.m */,
+			);
+			path = PeripheralView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +347,7 @@
 				8430C5332010933F00BDB200 /* UnlockIt.xcdatamodeld in Sources */,
 				8430C53B2010933F00BDB200 /* main.m in Sources */,
 				8430C5622010956900BDB200 /* BluetoothModule.m in Sources */,
+				8430C5BC2016143200BDB200 /* KnownDeviceTableCell.m in Sources */,
 				8430C5712011FF3700BDB200 /* PeripheralsView.m in Sources */,
 				8430C52A2010933F00BDB200 /* AppDelegate.m in Sources */,
 				8430C57620122C7E00BDB200 /* PeripheralInfoCell.m in Sources */,

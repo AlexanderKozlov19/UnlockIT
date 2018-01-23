@@ -15,8 +15,13 @@
 
 +(id)SharedBluetoothModule;
 
--(void)startScan;
+-(BOOL)isBluetoothReady;
+
+
+-(void)startScan:(NSArray *)devices;
 -(void)stopScan;
+
+-(void)unlockIt:(NSString*)uuid;
 
 @property (nonatomic, strong) NSMutableArray *peripheralsBLE;
 
