@@ -150,7 +150,7 @@
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
-    NSLog(@"writeValueForCharacteristic: @s", error.localizedDescription);
+    NSLog(@"writeValueForCharacteristic: %@", error.localizedDescription);
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {

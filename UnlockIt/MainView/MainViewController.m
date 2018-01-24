@@ -28,6 +28,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    NSShadow *shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+    shadow.shadowOffset = CGSizeMake(0, 1);
+    self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                           [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
+                                                           shadow, NSShadowAttributeName,
+                                                           [UIFont fontWithName:@"Sanitrixie" size:21.0], NSFontAttributeName, nil];
+    
+    [self.navigationController.navigationBar  setBackgroundImage:[UIImage imageNamed:@"backImage.png"] forBarMetrics:UIBarMetricsDefault];
+
+    
+ //   self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
+   // self.navigationController.navigationBar.translucent = NO;
+   //     self.title = @"Unlock It";
+    
+
+    
     automaticStartScanForBLE = true;    // later will be stored in NSUserDefaults
     devicesArray = [[NSMutableArray alloc] init];
     
@@ -270,7 +287,7 @@
        // [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else {
-        NSLog(@"Unhandled editing style! %d", editingStyle);
+        NSLog(@"Unhandled editing style! %ld", (long)editingStyle);
     }
 }
 
@@ -284,6 +301,12 @@
 - (void)onRenameButtonPressed:(int)numInDataRow {
     NSLog(@"rename button pressed %d", numInDataRow);
     [self showAlertWithInputNameForPeripheral:numInDataRow];
+}
+
+- (void)onUnlock:(int)numInDataRow {
+    NSLog(@"unlock %d", numInDataRow);
+    [self unlockWithLA:numInDataRow];
+   
 }
 
 -(void)showAlertWithInputNameForPeripheral:(int)numberOfDataRow {
@@ -338,6 +361,35 @@
     
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)unlockWithLA:(int)numberDataRow {
+    
+NSError *err1 = nil;
+    
+    self.laContext = [[LAContext alloc] init];
+
+BOOL bRes = [self.laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                        error:&err1];
+
+if ( !bRes ) {
+    NSLog(@"can't initialize Autentification");
+    return;
+}
+    
+    
+
+[self.laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"UnlockIT" reply:^(BOOL success, NSError *error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (success) {
+            NSLog(@"unlock with TouchID!");
+            [self.laContext invalidate];
+        } else {
+            NSLog(@"TouchID error: %@", error.description );
+            [self.laContext invalidate];
+        }
+    });
+}];
 }
 
 

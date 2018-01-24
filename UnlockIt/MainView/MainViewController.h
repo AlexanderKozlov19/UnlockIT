@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <LocalAuthentication/LocalAuthentication.h>
 #import "ViewControllerProtocol.h"
 #import "KnownDeviceTableCell.h"
 
@@ -17,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 @property (strong, nonatomic) NSMutableDictionary *dictionaryDevices;
 @property (weak, nonatomic) IBOutlet UITableView *knownDevicesTable;
+
+@property (nonatomic, strong) LAContext *laContext;
 
 -(void)startScan;
 -(void)stopScan;

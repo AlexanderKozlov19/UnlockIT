@@ -15,6 +15,8 @@ static CGFloat const kBounceValue = 20.0f;
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    self.isPanning = false;
+    
     self.panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     self.panRecognizer.delegate = self;
     [self.cellContentView addGestureRecognizer:self.panRecognizer];
@@ -41,7 +43,7 @@ static CGFloat const kBounceValue = 20.0f;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    return YES;
+    return !self.isPanning;
 }
 
 - (void)panThisCell:(UIPanGestureRecognizer *)recognizer {
@@ -49,6 +51,16 @@ static CGFloat const kBounceValue = 20.0f;
         case UIGestureRecognizerStateBegan:
             self.panStartPoint = [recognizer translationInView:self.cellContentView];
             self.startingRightConstraint = self.contraintRight.constant;
+            self.startingLeftConstraint = self.constraintLeft.constant;
+            if ( self.startingLeftConstraint == 0 )
+                self.initialState = 0;
+            if ( self.startingLeftConstraint < 0 )
+                self.initialState = -1;
+            if ( self.startingLeftConstraint > 0 )
+                self.initialState = 1;
+            
+            
+            self.isPanning = true;
             break;
         case UIGestureRecognizerStateChanged: {
             CGPoint currentPoint = [recognizer translationInView:self.cellContentView];
@@ -79,11 +91,14 @@ static CGFloat const kBounceValue = 20.0f;
                 //The cell was at least partially open.
                 CGFloat adjustment = self.startingRightConstraint - deltaX; //1
                 if (!panningLeft) {
-                    CGFloat constant = MAX(adjustment, 0); //2
-                    if (constant == 0) { //3
+                    //CGFloat constant = MAX(adjustment, self.unlockLabelWidth); //2
+                    if ( adjustment < self.unlockLabelWidth )
+                        adjustment = self.unlockLabelWidth;
+                        
+                    if (adjustment == 0) { //3
                         [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:NO];
                     } else { //4
-                        self.contraintRight.constant = constant;
+                        self.contraintRight.constant = adjustment;
                     }
                 } else {
                     CGFloat constant = MIN(adjustment, [self buttonTotalWidth]); //5
@@ -101,15 +116,27 @@ static CGFloat const kBounceValue = 20.0f;
             break;
         case UIGestureRecognizerStateEnded:
             if (self.startingRightConstraint == 0) { //1
-                //Cell was opening
-                CGFloat halfOfButtonOne = CGRectGetWidth(self.buttonRename.frame) / 2; //2
-                if (self.contraintRight.constant >= halfOfButtonOne) { //3
-                    //Open all the way
-                    [self setConstraintsToShowAllButtons:YES notifyDelegateDidOpen:YES];
-                } else {
-                    //Re-close
-                    [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:YES];
+              
+                if ( self.contraintRight.constant > 0 ) {
+                    // cell swiped left
+                    CGFloat halfOfButtonOne = CGRectGetWidth(self.buttonRename.frame) / 2; //2
+                    if (self.contraintRight.constant >= halfOfButtonOne) { //3
+                        //Open all the way
+                        [self setConstraintsToShowAllButtons:YES notifyDelegateDidOpen:YES];
+                    } else {
+                        //Re-close
+                        [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:YES];
+                    }
                 }
+                else {
+                    CGFloat halfOfLabelUnlock = CGRectGetWidth(self.labelUnlock.frame) / 2;
+                    if ( fabs( self.contraintRight.constant ) >= halfOfLabelUnlock )
+                        [self setConstraintsToShowUnlock:YES notifyDelegateDidOpen:YES];
+                    else
+                        [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:YES];
+                }
+                    
+                
             } else {
                 //Cell was closing
                 CGFloat buttonOnePlusHalfOfButton2 = CGRectGetWidth(self.buttonRename.frame) + (CGRectGetWidth(self.buttonDelete.frame) / 2); //4
@@ -121,6 +148,7 @@ static CGFloat const kBounceValue = 20.0f;
                     [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:YES];
                 }
             }
+            self.isPanning = false;
             break;
         case UIGestureRecognizerStateCancelled:
             if (self.contraintRight == 0) {
@@ -130,6 +158,7 @@ static CGFloat const kBounceValue = 20.0f;
                 //Cell was open - reset to the open state
                 [self setConstraintsToShowAllButtons:YES notifyDelegateDidOpen:YES];
             }
+            self.isPanning = false;
             break;
         default:
             break;
@@ -138,6 +167,11 @@ static CGFloat const kBounceValue = 20.0f;
 
 - (CGFloat)buttonTotalWidth {
     return CGRectGetWidth(self.frame) - CGRectGetMinX(self.buttonRename.frame);
+}
+
+-(CGFloat)unlockLabelWidth {
+    return -self.labelUnlock.frame.size.width;
+
 }
             
 - (void)resetConstraintContstantsToZero:(BOOL)animated notifyDelegateDidClose:(BOOL)endEditing {
@@ -171,7 +205,7 @@ static CGFloat const kBounceValue = 20.0f;
     
     [self updateConstraintsIfNeeded:animated completion:^(BOOL finished) {
         //3
-        self.contraintRight.constant = -[self buttonTotalWidth];
+        self.constraintLeft.constant = -[self buttonTotalWidth];
         self.contraintRight.constant = [self buttonTotalWidth];
         
         [self updateConstraintsIfNeeded:animated completion:^(BOOL finished) {
@@ -179,6 +213,30 @@ static CGFloat const kBounceValue = 20.0f;
             self.startingRightConstraint = self.contraintRight.constant;
         }];
     }];
+}
+
+- (void)setConstraintsToShowUnlock:(BOOL)animated notifyDelegateDidOpen:(BOOL)notifyDelegate {
+    if (self.startingRightConstraint == [self unlockLabelWidth] &&
+        self.contraintRight.constant == [self unlockLabelWidth]) {
+        return;
+    }
+    //2
+    //self.constraintLeft.constant = -[self unlockLabelWidth] - kBounceValue;
+    //self.contraintRight.constant = [self unlockLabelWidth] + kBounceValue;
+    
+    [self updateConstraintsIfNeeded:animated completion:^(BOOL finished) {
+        //3
+        self.constraintLeft.constant = -[self unlockLabelWidth];
+        self.contraintRight.constant = [self unlockLabelWidth];
+        
+        [self updateConstraintsIfNeeded:animated completion:^(BOOL finished) {
+            //4
+            self.startingRightConstraint = self.contraintRight.constant;
+        }];
+    }];
+    
+    if ( notifyDelegate )
+        [self.delegate onUnlock:self.numberOfDataRow];
 }
 
 - (void)updateConstraintsIfNeeded:(BOOL)animated completion:(void (^)(BOOL finished))completion {

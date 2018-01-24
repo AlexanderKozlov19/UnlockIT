@@ -31,6 +31,12 @@
 		8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C5BC2016143200BDB200 /* KnownDeviceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */; };
+		849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
+		849F33BE2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
+		849F33BF2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
+		849F33C92018D86E00AC747C /* backImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33C82018D86E00AC747C /* backImage.png */; };
+		849F33CA2018D86E00AC747C /* backImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33C82018D86E00AC747C /* backImage.png */; };
+		849F33CB2018D86E00AC747C /* backImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33C82018D86E00AC747C /* backImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +87,8 @@
 		8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralInfoCell.m; sourceTree = "<group>"; };
 		8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KnownDeviceTableCell.h; path = UnlockIt/MainView/KnownDeviceTableCell.h; sourceTree = SOURCE_ROOT; };
 		8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KnownDeviceTableCell.m; path = UnlockIt/MainView/KnownDeviceTableCell.m; sourceTree = SOURCE_ROOT; };
+		849F33BC2018C51D00AC747C /* Sanitrixie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sanitrixie.ttf; sourceTree = "<group>"; };
+		849F33C82018D86E00AC747C /* backImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backImage.png; path = ../backImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +120,8 @@
 		8430C51C2010933D00BDB200 = {
 			isa = PBXGroup;
 			children = (
+				849F33C82018D86E00AC747C /* backImage.png */,
+				849F33BC2018C51D00AC747C /* Sanitrixie.ttf */,
 				8430C5272010933F00BDB200 /* UnlockIt */,
 				8430C5432010933F00BDB200 /* UnlockItTests */,
 				8430C54E2010933F00BDB200 /* UnlockItUITests */,
@@ -312,8 +322,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849F33C92018D86E00AC747C /* backImage.png in Resources */,
 				8430C5382010933F00BDB200 /* LaunchScreen.storyboard in Resources */,
 				8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */,
+				849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */,
 				8430C5352010933F00BDB200 /* Assets.xcassets in Resources */,
 				8430C5302010933F00BDB200 /* Main.storyboard in Resources */,
 			);
@@ -323,6 +335,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849F33CA2018D86E00AC747C /* backImage.png in Resources */,
+				849F33BE2018C51E00AC747C /* Sanitrixie.ttf in Resources */,
 				8430C56D2010EAFC00BDB200 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +345,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				849F33CB2018D86E00AC747C /* backImage.png in Resources */,
+				849F33BF2018C51E00AC747C /* Sanitrixie.ttf in Resources */,
 				8430C56E2010EAFC00BDB200 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
