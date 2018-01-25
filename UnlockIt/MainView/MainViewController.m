@@ -34,9 +34,23 @@
     self.navigationController.navigationBar.titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                            [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                            shadow, NSShadowAttributeName,
-                                                           [UIFont fontWithName:@"Sanitrixie" size:21.0], NSFontAttributeName, nil];
-    
+                                                           [UIFont fontWithName:@"ClearSans" size:23.0], NSFontAttributeName, nil];
     [self.navigationController.navigationBar  setBackgroundImage:[UIImage imageNamed:@"backImage.png"] forBarMetrics:UIBarMetricsDefault];
+    
+    UITapGestureRecognizer *tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];//your action selector
+    [tapRecognizer setNumberOfTapsRequired:1];
+    
+    self.activeLocksLabel.userInteractionEnabled = true;
+    [self.activeLocksLabel addGestureRecognizer:tapRecognizer];
+    
+    tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];//your action selector
+    [tapRecognizer setNumberOfTapsRequired:1];
+    
+    self.allLocksLabel.userInteractionEnabled = true;
+    [self.allLocksLabel addGestureRecognizer:tapRecognizer];
+    
+    
+    
 
     
  //   self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
@@ -57,6 +71,10 @@
         [devicesArray addObject:mutableDictionary];
     }
 
+    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Safe", @"Name", @"111-222", @"UUID", @YES, @"active", nil ];
+    for ( int i = 0; i < 7; i++)
+        [devicesArray addObject:mutableDictionary];
+    
     [self.knownDevicesTable setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
     presenter = [[MainViewPresenter alloc] init];
@@ -89,6 +107,38 @@
     
     [BluetoothModule SharedBluetoothModule];    // start Bluetooth
     
+    
+}
+
+-(void)onTableLocksViewModeChanged:(id)sender {
+   
+    NSLog(@"onTap: %ld", ((UITapGestureRecognizer *)sender).view.tag );
+    [self setupTableViewMode:((UITapGestureRecognizer *)sender).view.tag];
+}
+
+-(UIColor*)colorFmHex:(unsigned char)red greenPart:(unsigned char)green bluePart:(unsigned char)blue {
+    UIColor *result = [UIColor colorWithRed:(float)red/255.0 green:(float)green/255.0 blue:(float)blue/255.0 alpha:1.0];
+    return result;
+    
+}
+
+-(void)setupTableViewMode:(int)iType {
+    
+    CGRect newFrame = self.statusActiveLocks.frame;
+    newFrame.size.height = iType ? 1 : 2;
+    newFrame.origin.y = iType ? 101: 100;
+    
+    self.statusActiveLocks.backgroundColor = iType ? [self colorFmHex:0x92 greenPart:0xA8 bluePart:0xC1]: [self colorFmHex:0x06 greenPart:0x7A bluePart:0xB5];
+                                                                                                           
+    self.statusActiveLocks.frame = newFrame;
+    
+    
+    CGRect newFrame2 = self.statusAllLocks.frame;
+    newFrame2.size.height = iType ? 2: 1;
+    newFrame2.origin.y = iType ? 100 : 101;
+    self.statusAllLocks.backgroundColor = iType ? [self colorFmHex:0x06 greenPart:0x7A bluePart:0xB5] : [self colorFmHex:0x92 greenPart:0xA8 bluePart:0xC1] ;
+    
+    self.statusAllLocks.frame = newFrame2;
     
 }
 
@@ -390,6 +440,10 @@ if ( !bRes ) {
         }
     });
 }];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60.0;
 }
 
 

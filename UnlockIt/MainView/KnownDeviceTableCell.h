@@ -30,6 +30,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contraintRight;
 @property (weak, nonatomic) IBOutlet UILabel *labelUnlock;
+@property (weak, nonatomic) IBOutlet UIButton *buttonVolumeIncrease;
+@property (weak, nonatomic) IBOutlet UIButton *buttonVolumeDecrease;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, assign) CGPoint panStartPoint;

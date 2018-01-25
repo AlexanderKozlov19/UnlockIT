@@ -20,6 +20,12 @@ static CGFloat const kBounceValue = 20.0f;
     self.panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     self.panRecognizer.delegate = self;
     [self.cellContentView addGestureRecognizer:self.panRecognizer];
+    
+    //self.buttonVolumeIncrease.layer.borderWidth = 1.0;
+   // self.buttonVolumeIncrease.layer.borderColor = [[UIColor colorWithRed:1.0/(float)0x06 green:1.0/(float)0x7a blue:1.0/(float)0xB5 alpha:1.0] CGColor];
+    
+    //self.buttonVolumeDecrease.layer.borderWidth = 1.0;
+   // self.buttonVolumeDecrease.layer.borderColor = self.buttonVolumeIncrease.layer.borderColor;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -65,6 +71,9 @@ static CGFloat const kBounceValue = 20.0f;
         case UIGestureRecognizerStateChanged: {
             CGPoint currentPoint = [recognizer translationInView:self.cellContentView];
             CGFloat deltaX = currentPoint.x - self.panStartPoint.x;
+            CGFloat deltaY = currentPoint.y - self.panStartPoint.y;
+            if ( fabs( deltaY ) > fabs( deltaX))
+                return;
             BOOL panningLeft = NO;
             if (currentPoint.x < self.panStartPoint.x) {
                 panningLeft = YES;

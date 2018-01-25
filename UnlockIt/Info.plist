@@ -50,6 +50,11 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Sanitrixie.ttf</string>
+		<string>ClearSans-Bold.ttf</string>
+		<string>ClearSans-Light.ttf</string>
+		<string>ClearSans-Medium.ttf</string>
+		<string>ClearSans-Regular.ttf</string>
+		<string>ClearSans-Thin.ttf</string>
 	</array>
 </dict>
 </plist>
