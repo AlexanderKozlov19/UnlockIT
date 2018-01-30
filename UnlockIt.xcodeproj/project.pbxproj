@@ -50,6 +50,28 @@
 		849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
 		849F33BE2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
 		849F33BF2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
+		849F33D2201F209400AC747C /* bluetooth_scan2.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33CE201F209300AC747C /* bluetooth_scan2.png */; };
+		849F33D3201F209400AC747C /* bluetooth_scan1.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33CF201F209400AC747C /* bluetooth_scan1.png */; };
+		849F33D4201F209400AC747C /* bluetooth_scan0.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D0201F209400AC747C /* bluetooth_scan0.png */; };
+		849F33D5201F209400AC747C /* bluetooth_scan3.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D1201F209400AC747C /* bluetooth_scan3.png */; };
+		849F33D7201F231500AC747C /* bluetooth_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D6201F231500AC747C /* bluetooth_disabled.png */; };
+		849F33DB201F3F6300AC747C /* fingerprintDis.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D9201F3F6300AC747C /* fingerprintDis.png */; };
+		849F33DC201F3F6300AC747C /* fingerprint_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DA201F3F6300AC747C /* fingerprint_1.png */; };
+		849F33E6201F5D5000AC747C /* fingerprint_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DD201F5D4E00AC747C /* fingerprint_6.png */; };
+		849F33E7201F5D5000AC747C /* fingerprint_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DE201F5D4F00AC747C /* fingerprint_4.png */; };
+		849F33E8201F5D5000AC747C /* fingerprint_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DF201F5D4F00AC747C /* fingerprint_10.png */; };
+		849F33E9201F5D5000AC747C /* fingerprint_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E0201F5D4F00AC747C /* fingerprint_2.png */; };
+		849F33EA201F5D5000AC747C /* fingerprint_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E1201F5D4F00AC747C /* fingerprint_5.png */; };
+		849F33EB201F5D5000AC747C /* fingerprint_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E2201F5D4F00AC747C /* fingerprint_3.png */; };
+		849F33EC201F5D5000AC747C /* fingerprint_7.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E3201F5D4F00AC747C /* fingerprint_7.png */; };
+		849F33ED201F5D5000AC747C /* fingerprint_8.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E4201F5D4F00AC747C /* fingerprint_8.png */; };
+		849F33EE201F5D5000AC747C /* fingerprint_9.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33E5201F5D5000AC747C /* fingerprint_9.png */; };
+		849F33F5201F5D7B00AC747C /* lock_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33F0201F5D7A00AC747C /* lock_1.png */; };
+		849F33F6201F5D7B00AC747C /* lock_2.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33F1201F5D7A00AC747C /* lock_2.png */; };
+		849F33F7201F5D7B00AC747C /* lock_3.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33F2201F5D7B00AC747C /* lock_3.png */; };
+		849F33F8201F5D7B00AC747C /* lock_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33F3201F5D7B00AC747C /* lock_4.png */; };
+		849F33F9201F5D7B00AC747C /* lock_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33F4201F5D7B00AC747C /* lock_5.png */; };
+		849F33FB201F687200AC747C /* lock_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33FA201F687200AC747C /* lock_6.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +129,28 @@
 		8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KnownDeviceTableCell.h; path = UnlockIt/MainView/KnownDeviceTableCell.h; sourceTree = SOURCE_ROOT; };
 		8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KnownDeviceTableCell.m; path = UnlockIt/MainView/KnownDeviceTableCell.m; sourceTree = SOURCE_ROOT; };
 		849F33BC2018C51D00AC747C /* Sanitrixie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sanitrixie.ttf; sourceTree = "<group>"; };
+		849F33CE201F209300AC747C /* bluetooth_scan2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan2.png; sourceTree = "<group>"; };
+		849F33CF201F209400AC747C /* bluetooth_scan1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan1.png; sourceTree = "<group>"; };
+		849F33D0201F209400AC747C /* bluetooth_scan0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan0.png; sourceTree = "<group>"; };
+		849F33D1201F209400AC747C /* bluetooth_scan3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan3.png; sourceTree = "<group>"; };
+		849F33D6201F231500AC747C /* bluetooth_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_disabled.png; sourceTree = "<group>"; };
+		849F33D9201F3F6300AC747C /* fingerprintDis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprintDis.png; sourceTree = "<group>"; };
+		849F33DA201F3F6300AC747C /* fingerprint_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_1.png; sourceTree = "<group>"; };
+		849F33DD201F5D4E00AC747C /* fingerprint_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_6.png; sourceTree = "<group>"; };
+		849F33DE201F5D4F00AC747C /* fingerprint_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_4.png; sourceTree = "<group>"; };
+		849F33DF201F5D4F00AC747C /* fingerprint_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_10.png; sourceTree = "<group>"; };
+		849F33E0201F5D4F00AC747C /* fingerprint_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_2.png; sourceTree = "<group>"; };
+		849F33E1201F5D4F00AC747C /* fingerprint_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_5.png; sourceTree = "<group>"; };
+		849F33E2201F5D4F00AC747C /* fingerprint_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_3.png; sourceTree = "<group>"; };
+		849F33E3201F5D4F00AC747C /* fingerprint_7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_7.png; sourceTree = "<group>"; };
+		849F33E4201F5D4F00AC747C /* fingerprint_8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_8.png; sourceTree = "<group>"; };
+		849F33E5201F5D5000AC747C /* fingerprint_9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_9.png; sourceTree = "<group>"; };
+		849F33F0201F5D7A00AC747C /* lock_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_1.png; sourceTree = "<group>"; };
+		849F33F1201F5D7A00AC747C /* lock_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_2.png; sourceTree = "<group>"; };
+		849F33F2201F5D7B00AC747C /* lock_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_3.png; sourceTree = "<group>"; };
+		849F33F3201F5D7B00AC747C /* lock_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_4.png; sourceTree = "<group>"; };
+		849F33F4201F5D7B00AC747C /* lock_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_5.png; sourceTree = "<group>"; };
+		849F33FA201F687200AC747C /* lock_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock_6.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +217,7 @@
 		8430C5272010933F00BDB200 /* UnlockIt */ = {
 			isa = PBXGroup;
 			children = (
+				849F33CC201F206C00AC747C /* Images */,
 				0DD4182E2019F7BC0016BA2D /* Fonts */,
 				8430C5B92015FB2D00BDB200 /* PeripheralView */,
 				8430C57920124C9400BDB200 /* MainView */,
@@ -240,6 +285,59 @@
 				8430C5702011FF3700BDB200 /* PeripheralsView.m */,
 			);
 			path = PeripheralView;
+			sourceTree = "<group>";
+		};
+		849F33CC201F206C00AC747C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				849F33EF201F5D6700AC747C /* Lock */,
+				849F33D8201F3F5400AC747C /* Fingerprint */,
+				849F33CD201F208200AC747C /* Bluetooth */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		849F33CD201F208200AC747C /* Bluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				849F33D6201F231500AC747C /* bluetooth_disabled.png */,
+				849F33D0201F209400AC747C /* bluetooth_scan0.png */,
+				849F33CF201F209400AC747C /* bluetooth_scan1.png */,
+				849F33CE201F209300AC747C /* bluetooth_scan2.png */,
+				849F33D1201F209400AC747C /* bluetooth_scan3.png */,
+			);
+			path = Bluetooth;
+			sourceTree = "<group>";
+		};
+		849F33D8201F3F5400AC747C /* Fingerprint */ = {
+			isa = PBXGroup;
+			children = (
+				849F33D9201F3F6300AC747C /* fingerprintDis.png */,
+				849F33DA201F3F6300AC747C /* fingerprint_1.png */,
+				849F33E0201F5D4F00AC747C /* fingerprint_2.png */,
+				849F33E2201F5D4F00AC747C /* fingerprint_3.png */,
+				849F33DE201F5D4F00AC747C /* fingerprint_4.png */,
+				849F33E1201F5D4F00AC747C /* fingerprint_5.png */,
+				849F33DD201F5D4E00AC747C /* fingerprint_6.png */,
+				849F33E3201F5D4F00AC747C /* fingerprint_7.png */,
+				849F33E4201F5D4F00AC747C /* fingerprint_8.png */,
+				849F33E5201F5D5000AC747C /* fingerprint_9.png */,
+				849F33DF201F5D4F00AC747C /* fingerprint_10.png */,
+			);
+			path = Fingerprint;
+			sourceTree = "<group>";
+		};
+		849F33EF201F5D6700AC747C /* Lock */ = {
+			isa = PBXGroup;
+			children = (
+				849F33F0201F5D7A00AC747C /* lock_1.png */,
+				849F33F1201F5D7A00AC747C /* lock_2.png */,
+				849F33F2201F5D7B00AC747C /* lock_3.png */,
+				849F33F3201F5D7B00AC747C /* lock_4.png */,
+				849F33F4201F5D7B00AC747C /* lock_5.png */,
+				849F33FA201F687200AC747C /* lock_6.png */,
+			);
+			path = Lock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -354,15 +452,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DD418192019E9A10016BA2D /* backImage.png in Resources */,
+				849F33E6201F5D5000AC747C /* fingerprint_6.png in Resources */,
+				849F33DC201F3F6300AC747C /* fingerprint_1.png in Resources */,
+				849F33F8201F5D7B00AC747C /* lock_4.png in Resources */,
+				849F33E7201F5D5000AC747C /* fingerprint_4.png in Resources */,
 				8430C5382010933F00BDB200 /* LaunchScreen.storyboard in Resources */,
+				849F33D7201F231500AC747C /* bluetooth_disabled.png in Resources */,
+				849F33D4201F209400AC747C /* bluetooth_scan0.png in Resources */,
 				0DD418222019F7B80016BA2D /* ClearSans-Medium.ttf in Resources */,
 				0DD418252019F7B80016BA2D /* ClearSans-Thin.ttf in Resources */,
 				8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */,
+				849F33F6201F5D7B00AC747C /* lock_2.png in Resources */,
+				849F33F5201F5D7B00AC747C /* lock_1.png in Resources */,
 				849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */,
+				849F33D2201F209400AC747C /* bluetooth_scan2.png in Resources */,
 				0DD418282019F7B80016BA2D /* ClearSans-Light.ttf in Resources */,
+				849F33FB201F687200AC747C /* lock_6.png in Resources */,
 				8430C5352010933F00BDB200 /* Assets.xcassets in Resources */,
+				849F33EA201F5D5000AC747C /* fingerprint_5.png in Resources */,
+				849F33D3201F209400AC747C /* bluetooth_scan1.png in Resources */,
 				8430C5302010933F00BDB200 /* Main.storyboard in Resources */,
+				849F33EC201F5D5000AC747C /* fingerprint_7.png in Resources */,
+				849F33E8201F5D5000AC747C /* fingerprint_10.png in Resources */,
+				849F33E9201F5D5000AC747C /* fingerprint_2.png in Resources */,
+				849F33D5201F209400AC747C /* bluetooth_scan3.png in Resources */,
+				849F33DB201F3F6300AC747C /* fingerprintDis.png in Resources */,
 				0DD4181F2019F7B80016BA2D /* ClearSans-Regular.ttf in Resources */,
+				849F33F9201F5D7B00AC747C /* lock_5.png in Resources */,
+				849F33ED201F5D5000AC747C /* fingerprint_8.png in Resources */,
+				849F33EB201F5D5000AC747C /* fingerprint_3.png in Resources */,
+				849F33EE201F5D5000AC747C /* fingerprint_9.png in Resources */,
+				849F33F7201F5D7B00AC747C /* lock_3.png in Resources */,
 				0DD4182B2019F7B80016BA2D /* ClearSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

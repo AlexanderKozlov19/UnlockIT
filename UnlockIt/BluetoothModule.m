@@ -11,7 +11,7 @@
 
 
 @implementation BluetoothModule {
-    BOOL isScanning;
+    BOOL isScanningBLE;
     BOOL scanOnlyForLocks;
 }
 
@@ -37,7 +37,7 @@
 }
 
 -(id)init {
-    isScanning = false;
+    isScanningBLE = false;
     scanOnlyForLocks = false;
     
     peripheralsBLE = [[NSMutableArray alloc] init];
@@ -86,7 +86,16 @@
 }
 
 - (void) centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral {
-       [peripheral discoverServices:nil];
+    for ( NSMutableDictionary *dict in peripheralsBLE ) {
+        CBPeripheral *peripheralLock = dict[@"CBPeripheral"];
+        if ( [peripheralLock.identifier.UUIDString isEqualToString:peripheral.identifier.UUIDString])
+            if ( [dict[@"NeedUnlock"] isEqual:@1] ) {
+                [self unlockIt:peripheral.identifier.UUIDString];
+                return;
+            }
+        }
+    
+      [peripheral discoverServices:nil];
        [peripheral readRSSI];
     
         [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverPeripheral" object:peripheral ];
@@ -171,8 +180,12 @@
     return ( centralManager.state == CBManagerStatePoweredOn );
 }
 
+-(BOOL)isScanning {
+    return isScanningBLE;
+}
+
 -(void)startScan:(BOOL)onlyLocks {
-    if ( isScanning )
+    if ( isScanningBLE )
         [self stopScan];
     
     [peripheralsBLE removeAllObjects];
@@ -180,7 +193,7 @@
     scanOnlyForLocks = onlyLocks;
     
     [centralManager scanForPeripheralsWithServices:nil options:nil];
-    isScanning = YES;
+    isScanningBLE = YES;
     
     NSLog(@"Bluetooth: startScan");
     
@@ -189,7 +202,7 @@
 -(void)stopScan {
 
     [centralManager stopScan];
-    isScanning = NO;
+    isScanningBLE = NO;
     
     for ( NSMutableDictionary *peripheralDict in peripheralsBLE ) {
         CBPeripheral *peripheral = peripheralDict[@"CBPeripheral"];
@@ -207,6 +220,20 @@
     for ( NSMutableDictionary *dict in peripheralsBLE ) {
         CBPeripheral *peripheral = dict[@"CBPeripheral"];
         if ( [peripheral.identifier.UUIDString isEqualToString:uuid]) {
+            
+            if ( ( peripheral.state == CBPeripheralStateDisconnected ) || ( peripheral.state == CBPeripheralStateDisconnecting ) ) {
+                dict[@"NeedUnlock"] = @YES;
+                if ( !self->isScanningBLE )
+                     [centralManager scanForPeripheralsWithServices:nil options:nil];
+                [centralManager connectPeripheral:peripheral options:nil];
+                return;
+            }
+            else if ( peripheral.state == CBPeripheralStateConnecting ) {
+                dict[@"NeedUnlock"] = @YES;
+                return;
+                
+            }
+            
             for ( CBService *serice in peripheral.services ) {
                 if ( [serice.UUID.UUIDString isEqualToString:@"1815"]) {
                     for ( CBCharacteristic *characteristic in serice.characteristics ) {
@@ -214,6 +241,7 @@
                             unsigned char i = 1;
                             NSData *data = [NSData dataWithBytes: &i length: sizeof(i)];
                             [peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+                            dict[@"NeedUnlock"] = @NO;
                             
                         }
                     }

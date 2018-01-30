@@ -21,13 +21,14 @@
 @implementation MainViewController {
     MainViewPresenter* presenter;
     BOOL    automaticStartScanForBLE;
-    NSMutableArray *devicesArray;
+    NSMutableArray *devicesArray, *activeDevicesArray, *showingDevicesArray;
+    BOOL    isModeShowActiveLocks;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
     
+    //--- Navigation controller and shadow setup
     NSShadow *shadow = [[NSShadow alloc] init];
     shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
     shadow.shadowOffset = CGSizeMake(0, 1);
@@ -37,30 +38,33 @@
                                                            [UIFont fontWithName:@"ClearSans" size:23.0], NSFontAttributeName, nil];
     [self.navigationController.navigationBar  setBackgroundImage:[UIImage imageNamed:@"backImage.png"] forBarMetrics:UIBarMetricsDefault];
     
-    UITapGestureRecognizer *tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];//your action selector
+    //---- selectors for locks
+    UITapGestureRecognizer *tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];
     [tapRecognizer setNumberOfTapsRequired:1];
     
     self.activeLocksLabel.userInteractionEnabled = true;
     [self.activeLocksLabel addGestureRecognizer:tapRecognizer];
     
-    tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];//your action selector
+    tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];
     [tapRecognizer setNumberOfTapsRequired:1];
     
     self.allLocksLabel.userInteractionEnabled = true;
     [self.allLocksLabel addGestureRecognizer:tapRecognizer];
     
+    //---- selector for images
+    UITapGestureRecognizer *tapRecognizerBLE= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onScanBluetoothImage)];
+    [tapRecognizerBLE setNumberOfTapsRequired:1];
+    
+    self.bluetoothStatusImage.userInteractionEnabled = true;
+    [self.bluetoothStatusImage addGestureRecognizer:tapRecognizerBLE];
     
     
-
-    
- //   self.navigationController.navigationBar.barTintColor = [UIColor blackColor];
-   // self.navigationController.navigationBar.translucent = NO;
-   //     self.title = @"Unlock It";
-    
-
-    
+    //----- variable initialization
+    isModeShowActiveLocks = true;
     automaticStartScanForBLE = true;    // later will be stored in NSUserDefaults
     devicesArray = [[NSMutableArray alloc] init];
+    
+    activeDevicesArray = [[NSMutableArray alloc] init];
     
     NSArray *storedArray = [[[NSUserDefaults alloc] init] objectForKey:@"savedArray"];
     
@@ -70,11 +74,8 @@
         [mutableDictionary setObject:@NO forKey:@"active"];
         [devicesArray addObject:mutableDictionary];
     }
-
-    NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithObjectsAndKeys:@"Safe", @"Name", @"111-222", @"UUID", @YES, @"active", nil ];
-    for ( int i = 0; i < 7; i++)
-        [devicesArray addObject:mutableDictionary];
     
+    //----- view configuration
     [self.knownDevicesTable setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     
     presenter = [[MainViewPresenter alloc] init];
@@ -83,7 +84,9 @@
     self.knownDevicesTable.delegate = self;
     self.knownDevicesTable.dataSource = self;
     
+    [self.lockStatusImage setImage:[UIImage imageNamed:@"lock_1.png"]];
     
+    //----- NSNotifications
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(onManagerDidUpdateState:)
                                                  name: @"ManagerUpdateState"
@@ -103,17 +106,34 @@
                                              selector: @selector(onUpdateRSSI:)
                                                  name: @"UpdateRSSI"
                                                object: nil];
+    // set status of BioID
+    [self checkBioID];
     
     
-    [BluetoothModule SharedBluetoothModule];    // start Bluetooth
+    // start Bluetooth
+    [BluetoothModule SharedBluetoothModule];
     
     
+}
+
+-(void)checkBioID {
+    self.laContext = [[LAContext alloc] init];
+    NSError *error;
+    BOOL bRes = [self.laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                            error:&error];
+    
+    if ( bRes )
+        [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprint_1.png"]];
+    else
+        [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprintDis.png"]];
+    
+    [self.laContext invalidate];
 }
 
 -(void)onTableLocksViewModeChanged:(id)sender {
    
     NSLog(@"onTap: %ld", ((UITapGestureRecognizer *)sender).view.tag );
-    [self setupTableViewMode:((UITapGestureRecognizer *)sender).view.tag];
+    [self setupTableViewMode:(int)((UITapGestureRecognizer *)sender).view.tag];
 }
 
 -(UIColor*)colorFmHex:(unsigned char)red greenPart:(unsigned char)green bluePart:(unsigned char)blue {
@@ -122,7 +142,20 @@
     
 }
 
+-(void)onScanBluetoothImage {
+    if ( [[BluetoothModule SharedBluetoothModule] isBluetoothReady] ) {
+        if ( [[BluetoothModule SharedBluetoothModule] isScanning])
+            [self stopScan];
+        else
+            [self startScan];
+        
+    }
+    
+}
+
 -(void)setupTableViewMode:(int)iType {
+    
+    isModeShowActiveLocks = !iType;
     
     CGRect newFrame = self.statusActiveLocks.frame;
     newFrame.size.height = iType ? 1 : 2;
@@ -140,6 +173,8 @@
     
     self.statusAllLocks.frame = newFrame2;
     
+    [self.knownDevicesTable reloadData];
+    
 }
 
 
@@ -152,6 +187,8 @@
 -(void)onManagerDidUpdateState:(NSNotification *)data {
     [presenter onBluetoothState:data.object];
     
+    
+    
    
 
     
@@ -159,12 +196,14 @@
 
 
 -(void)updateBluetoothState:(BOOL)state withText:(NSString*)stateText {
-    if ( state )
-       [self.statusImage setImage:[UIImage imageNamed: @"bluetoothOk"]];
-    else
-      [self.statusImage setImage:[UIImage imageNamed: @"bluetoothDis"]];
-    
-    [self.statusLabel setText:stateText];
+    if ( state ) {
+        [self.bluetoothStatusImage setImage:[UIImage imageNamed:@"bluetooth_scan0.png"]];
+    }
+    else {
+        if ( [[BluetoothModule SharedBluetoothModule] isScanning] )
+            [self stopScan];
+        [self.bluetoothStatusImage setImage:[UIImage imageNamed:@"bluetooth_disabled.png"]];
+    }
     
    //if ( state && automaticStartScanForBLE )
   //      [self startScan];
@@ -177,7 +216,22 @@
 -(void)startScan {
     //[self performSegueWithIdentifier:@"SegueToPeripheralView" sender:self];
     
+    for ( NSMutableDictionary *dictionary in devicesArray ) {
+        [dictionary setObject:@NO forKey:@"active"];
+    }
+    
+    [self.knownDevicesTable reloadData];
+    
     [[BluetoothModule SharedBluetoothModule] startScan:YES];
+    
+    NSMutableArray *scanAnimations = [NSMutableArray array];
+    for(int i = 0; i <= 3; ++i) {
+        [scanAnimations addObject:[UIImage imageNamed:[NSString stringWithFormat:@"bluetooth_scan%d.png", i]]];
+    }
+    
+    self.bluetoothStatusImage.animationImages = scanAnimations;
+    self.bluetoothStatusImage.animationDuration = 2.0f;
+    [self.bluetoothStatusImage startAnimating];
     
     
     
@@ -207,6 +261,9 @@
 */
 -(void)stopScan {
     [[BluetoothModule SharedBluetoothModule] stopScan];
+    
+    [self.bluetoothStatusImage stopAnimating];
+    [self.bluetoothStatusImage setImage:[UIImage imageNamed:@"bluetooth_scan0.png"]];
 }
 
 /*
@@ -246,15 +303,26 @@
     
     CBPeripheral *peripheral = data.object;
     NSLog(@"onDiscoverPeripheral MainView : %@", peripheral.name);
-    for ( NSMutableDictionary *dictionary in devicesArray )  {
-        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] ) {
-            [dictionary setObject:@YES forKey:@"active"];
-            [self.knownDevicesTable reloadData];
+    NSMutableDictionary *dictionary = nil;
+    BOOL foundLock = false;
+    
+    for ( dictionary in devicesArray )  {
+        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] )
+            foundLock = true;
             break;
         }
+        
+    if ( !foundLock ) {
+        dictionary = [[NSMutableDictionary alloc] init];
+        dictionary[@"UUID"] = peripheral.identifier.UUIDString;
+        dictionary[@"Name"] = @"Unknown";
+        [devicesArray addObject:dictionary];
+    }
+        
+    [dictionary setObject:@YES forKey:@"active"];
+    [self.knownDevicesTable reloadData];
           
-          
-    };
+
 }
 
 -(void)onUpdateRSSI:(NSNotification *)data {
@@ -293,10 +361,27 @@
     
 }
 
+-(void)resetCellAfterUnlock:(int)numberOfRaw {
+    NSIndexPath *indexPath = [[NSIndexPath alloc]init];
+    indexPath = [NSIndexPath indexPathForItem:numberOfRaw inSection:0];
+    KnownDeviceTableCell *cell = [self.knownDevicesTable cellForRowAtIndexPath:indexPath];
+    [cell resetConstraintContstantsToZero:@YES notifyDelegateDidClose:@NO];
+    
+}
+
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     int numberOfRows = 0;
+    [activeDevicesArray removeAllObjects];
+    showingDevicesArray = isModeShowActiveLocks ? activeDevicesArray : devicesArray;
+    
     for ( NSMutableDictionary *dictionary in devicesArray ) {
-      //  if ( ![dictionary[@"active"] isEqual:[NSNull null]] && [dictionary[@"active"] isEqual:@YES] )
+        if ( isModeShowActiveLocks ) {
+            if ( [dictionary[@"active"] isEqual:@1] ) {
+                numberOfRows++;
+                [activeDevicesArray addObject:dictionary];
+            }
+        }
+        else
             numberOfRows++;
     }
     return numberOfRows;
@@ -306,26 +391,27 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
-    if ( indexPath.row < [devicesArray count]) {
-        KnownDeviceTableCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"knownDeviceTableCell"];
-        tableCell.numberOfDataRow = (int)indexPath.row;
-        tableCell.delegate = self;
-        NSDictionary *dict = [devicesArray objectAtIndex:indexPath.row];
-        [tableCell.storedName setText:dict[@"Name"]];
-        [tableCell.storedName sizeToFit];
+    if ( indexPath.row < [showingDevicesArray count]) {
         
-        [tableCell.storedUUID setText:dict[@"UUID"]];
-        [tableCell.storedUUID sizeToFit];
+            KnownDeviceTableCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"knownDeviceTableCell"];
+            tableCell.numberOfDataRow = (int)indexPath.row;
+            tableCell.delegate = self;
+            NSDictionary *dict = [showingDevicesArray objectAtIndex:indexPath.row];
+            [tableCell.storedName setText:dict[@"Name"]];
+            [tableCell.storedName sizeToFit];
+            
+            [tableCell.storedUUID setText:dict[@"UUID"]];
+            [tableCell.storedUUID sizeToFit];
+            
+            cell = tableCell;
         
-        cell = tableCell;
     }
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    KnownDeviceTableCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    [[BluetoothModule SharedBluetoothModule] unlockIt:cell.storedUUID.text];
+
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -399,6 +485,7 @@
     UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [devicesArray removeObjectAtIndex:numberOfDataRow];
         [self.knownDevicesTable reloadData];
+        [[[NSUserDefaults alloc] init] setObject:devicesArray forKey:@"savedArray"];
 
         
         
@@ -415,31 +502,64 @@
 
 -(void)unlockWithLA:(int)numberDataRow {
     
-NSError *err1 = nil;
+    NSError *err1 = nil;
     
     self.laContext = [[LAContext alloc] init];
 
-BOOL bRes = [self.laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                                        error:&err1];
+    BOOL bRes = [self.laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                                            error:&err1];
 
-if ( !bRes ) {
-    NSLog(@"can't initialize Autentification");
-    return;
-}
+    if ( !bRes ) {
+        NSLog(@"can't initialize Autentification");
+        [self.laContext invalidate];
+        return;
+    }
+
+    NSMutableArray *scanAnimations = [NSMutableArray array];
+    for(int i = 1; i <= 10; ++i) {
+        [scanAnimations addObject:[UIImage imageNamed:[NSString stringWithFormat:@"fingerprint_%d.png", i]]];
+    }
+
+    self.bioIDStatusImage.animationImages = scanAnimations;
+    self.bioIDStatusImage.animationDuration = 2.0f;
+    [self.bioIDStatusImage startAnimating];
     
     
+    
 
-[self.laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"UnlockIT" reply:^(BOOL success, NSError *error) {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (success) {
-            NSLog(@"unlock with TouchID!");
-            [self.laContext invalidate];
-        } else {
-            NSLog(@"TouchID error: %@", error.description );
-            [self.laContext invalidate];
-        }
-    });
-}];
+    [self.laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"UnlockIT" reply:^(BOOL success, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                NSLog(@"unlock with TouchID!");
+                [self.bioIDStatusImage stopAnimating];
+                [self.laContext invalidate];
+                
+                NSMutableArray *scanAnimations = [NSMutableArray array];
+                for(int i = 1; i <= 6; ++i) {
+                    [scanAnimations addObject:[UIImage imageNamed:[NSString stringWithFormat:@"lock_%d.png", i]]];
+                }
+                
+                [scanAnimations addObject:[UIImage imageNamed:@"lock_6.png"]];
+                
+                self.lockStatusImage.animationImages = scanAnimations;
+                self.lockStatusImage.animationDuration = 2.0f;
+                self.lockStatusImage.animationRepeatCount = 1;
+                [self.lockStatusImage startAnimating];
+                
+                
+                NSMutableDictionary *dictionary = [devicesArray objectAtIndex:numberDataRow];
+                [[BluetoothModule SharedBluetoothModule] unlockIt:dictionary[@"UUID"]];
+                
+                [self resetCellAfterUnlock:numberDataRow];
+            } else {
+                NSLog(@"TouchID error: %@", error.description );
+                 [self.bioIDStatusImage stopAnimating];
+                [self.laContext invalidate];
+                
+                [self resetCellAfterUnlock:numberDataRow];
+            }
+        });
+    }];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

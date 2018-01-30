@@ -19,6 +19,8 @@
 
 - (IBAction)buttonClicked:(id)sender;
 
+- (void)resetConstraintContstantsToZero:(BOOL)animated notifyDelegateDidClose:(BOOL)endEditing;
+
 @property (nonatomic, assign) int numberOfDataRow;
 
 @property (weak, nonatomic) IBOutlet UILabel *storedName;

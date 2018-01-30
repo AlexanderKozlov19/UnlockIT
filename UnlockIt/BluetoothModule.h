@@ -16,6 +16,8 @@
 +(id)SharedBluetoothModule;
 
 -(BOOL)isBluetoothReady;
+-(BOOL)isScanning;
+
 
 
 -(void)startScan:(BOOL)onlyLocks;
