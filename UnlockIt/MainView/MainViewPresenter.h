@@ -8,13 +8,32 @@
 
 #import <Foundation/Foundation.h>
 
-#import "MainViewController.h"
 #import "ViewControllerProtocol.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @interface MainViewPresenter : NSObject
 
 @property (weak, nonatomic)  id <ViewControllerProtocol> view;
 
--(void)onBluetoothState:(NSNumber*)data;
+-(void)startBluetooth;
+-(void)changeScanModeBLE;
+-(void)stopScan;
+
+-(void)checkBioID;
+
+@property (nonatomic, assign, readonly) NSInteger numberOfDispalyingLocks;
+-(void)selectTableViewMode:(int)type;
+-(int)askForLocksCountForTableView;
+-(NSString*)nameForLocK:(NSInteger)number;
+-(NSString*)uuidForLock:(NSInteger)number;
+-(NSString*)statusNameForLock:(NSInteger)number;
+
+-(void)storeName:(NSString*)name forLock:(NSInteger)lockNumber;
+-(void)forgetLock:(NSInteger)lockNumber;
+
+-(void)unlockDevice:(NSInteger)number;
+
+
+
 
 @end

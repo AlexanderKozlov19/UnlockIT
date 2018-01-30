@@ -43,7 +43,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
     MainViewController *rootViewController = (MainViewController*)navigationController.topViewController;
-    [rootViewController checkBioID];
+    [rootViewController.presenter checkBioID];
 }
 
 
@@ -53,7 +53,7 @@
     
     UINavigationController *navigationController = (UINavigationController*)self.window.rootViewController;
     MainViewController *rootViewController = (MainViewController*)navigationController.topViewController;
-    [rootViewController stopScan];
+    [rootViewController.presenter stopScan];
     
     [self saveContext];
 }

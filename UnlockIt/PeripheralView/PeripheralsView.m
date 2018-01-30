@@ -36,7 +36,7 @@
                                                  name: @"UpdateRSSI"
                                                object: nil];
     
-    [[BluetoothModule SharedBluetoothModule] startScan:nil];
+    [[BluetoothModule SharedBluetoothModule] startScan:YES];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {

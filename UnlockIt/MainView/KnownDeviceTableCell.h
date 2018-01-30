@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @protocol SwipeableCellDelegate <NSObject>
-- (void)onDeleteButtonPressed:(int)numInDataRow;
-- (void)onRenameButtonPressed:(int)numInDataRow;
-- (void)onUnlock:(int)numInDataRow;
+- (void)onDeleteButtonPressed:(NSInteger)numInDataRow;
+- (void)onRenameButtonPressed:(NSInteger)numInDataRow;
+- (void)onUnlock:(NSInteger)numInDataRow;
 @end
 
 @interface KnownDeviceTableCell : UITableViewCell <UIGestureRecognizerDelegate>
@@ -21,7 +21,7 @@
 
 - (void)resetConstraintContstantsToZero:(BOOL)animated notifyDelegateDidClose:(BOOL)endEditing;
 
-@property (nonatomic, assign) int numberOfDataRow;
+@property (nonatomic, assign) NSInteger numberOfDataRow;
 
 @property (weak, nonatomic) IBOutlet UILabel *storedName;
 
@@ -34,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelUnlock;
 @property (weak, nonatomic) IBOutlet UIButton *buttonVolumeIncrease;
 @property (weak, nonatomic) IBOutlet UIButton *buttonVolumeDecrease;
+@property (weak, nonatomic) IBOutlet UIImageView *statusImage;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, assign) CGPoint panStartPoint;

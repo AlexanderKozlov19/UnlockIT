@@ -47,6 +47,10 @@
 		8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C5BC2016143200BDB200 /* KnownDeviceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */; };
+		846549B220206B1F0010788C /* fingerprint_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B120206B1F0010788C /* fingerprint_1.png */; };
+		846549B52020B6C60010788C /* statusOk.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B42020B6C60010788C /* statusOk.png */; };
+		846549B72020B6E60010788C /* statusOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B62020B6E60010788C /* statusOff.png */; };
+		846549BB2020B9C20010788C /* statusSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549BA2020B9C20010788C /* statusSearch.png */; };
 		849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
 		849F33BE2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
 		849F33BF2018C51E00AC747C /* Sanitrixie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 849F33BC2018C51D00AC747C /* Sanitrixie.ttf */; };
@@ -56,7 +60,6 @@
 		849F33D5201F209400AC747C /* bluetooth_scan3.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D1201F209400AC747C /* bluetooth_scan3.png */; };
 		849F33D7201F231500AC747C /* bluetooth_disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D6201F231500AC747C /* bluetooth_disabled.png */; };
 		849F33DB201F3F6300AC747C /* fingerprintDis.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33D9201F3F6300AC747C /* fingerprintDis.png */; };
-		849F33DC201F3F6300AC747C /* fingerprint_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DA201F3F6300AC747C /* fingerprint_1.png */; };
 		849F33E6201F5D5000AC747C /* fingerprint_6.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DD201F5D4E00AC747C /* fingerprint_6.png */; };
 		849F33E7201F5D5000AC747C /* fingerprint_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DE201F5D4F00AC747C /* fingerprint_4.png */; };
 		849F33E8201F5D5000AC747C /* fingerprint_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 849F33DF201F5D4F00AC747C /* fingerprint_10.png */; };
@@ -128,6 +131,10 @@
 		8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralInfoCell.m; sourceTree = "<group>"; };
 		8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KnownDeviceTableCell.h; path = UnlockIt/MainView/KnownDeviceTableCell.h; sourceTree = SOURCE_ROOT; };
 		8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KnownDeviceTableCell.m; path = UnlockIt/MainView/KnownDeviceTableCell.m; sourceTree = SOURCE_ROOT; };
+		846549B120206B1F0010788C /* fingerprint_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_1.png; sourceTree = "<group>"; };
+		846549B42020B6C60010788C /* statusOk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusOk.png; sourceTree = "<group>"; };
+		846549B62020B6E60010788C /* statusOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusOff.png; sourceTree = "<group>"; };
+		846549BA2020B9C20010788C /* statusSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusSearch.png; sourceTree = "<group>"; };
 		849F33BC2018C51D00AC747C /* Sanitrixie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sanitrixie.ttf; sourceTree = "<group>"; };
 		849F33CE201F209300AC747C /* bluetooth_scan2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan2.png; sourceTree = "<group>"; };
 		849F33CF201F209400AC747C /* bluetooth_scan1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan1.png; sourceTree = "<group>"; };
@@ -135,7 +142,6 @@
 		849F33D1201F209400AC747C /* bluetooth_scan3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_scan3.png; sourceTree = "<group>"; };
 		849F33D6201F231500AC747C /* bluetooth_disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth_disabled.png; sourceTree = "<group>"; };
 		849F33D9201F3F6300AC747C /* fingerprintDis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprintDis.png; sourceTree = "<group>"; };
-		849F33DA201F3F6300AC747C /* fingerprint_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_1.png; sourceTree = "<group>"; };
 		849F33DD201F5D4E00AC747C /* fingerprint_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_6.png; sourceTree = "<group>"; };
 		849F33DE201F5D4F00AC747C /* fingerprint_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_4.png; sourceTree = "<group>"; };
 		849F33DF201F5D4F00AC747C /* fingerprint_10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_10.png; sourceTree = "<group>"; };
@@ -187,7 +193,6 @@
 				0DD4181B2019F7B60016BA2D /* ClearSans-Medium.ttf */,
 				0DD4181A2019F7B50016BA2D /* ClearSans-Regular.ttf */,
 				0DD4181C2019F7B60016BA2D /* ClearSans-Thin.ttf */,
-				0DD418182019E9A10016BA2D /* backImage.png */,
 				849F33BC2018C51D00AC747C /* Sanitrixie.ttf */,
 			);
 			path = Fonts;
@@ -287,9 +292,21 @@
 			path = PeripheralView;
 			sourceTree = "<group>";
 		};
+		846549B32020B6B80010788C /* Status */ = {
+			isa = PBXGroup;
+			children = (
+				846549BA2020B9C20010788C /* statusSearch.png */,
+				846549B62020B6E60010788C /* statusOff.png */,
+				846549B42020B6C60010788C /* statusOk.png */,
+			);
+			path = Status;
+			sourceTree = "<group>";
+		};
 		849F33CC201F206C00AC747C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0DD418182019E9A10016BA2D /* backImage.png */,
+				846549B32020B6B80010788C /* Status */,
 				849F33EF201F5D6700AC747C /* Lock */,
 				849F33D8201F3F5400AC747C /* Fingerprint */,
 				849F33CD201F208200AC747C /* Bluetooth */,
@@ -313,7 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				849F33D9201F3F6300AC747C /* fingerprintDis.png */,
-				849F33DA201F3F6300AC747C /* fingerprint_1.png */,
+				846549B120206B1F0010788C /* fingerprint_1.png */,
 				849F33E0201F5D4F00AC747C /* fingerprint_2.png */,
 				849F33E2201F5D4F00AC747C /* fingerprint_3.png */,
 				849F33DE201F5D4F00AC747C /* fingerprint_4.png */,
@@ -453,14 +470,15 @@
 			files = (
 				0DD418192019E9A10016BA2D /* backImage.png in Resources */,
 				849F33E6201F5D5000AC747C /* fingerprint_6.png in Resources */,
-				849F33DC201F3F6300AC747C /* fingerprint_1.png in Resources */,
 				849F33F8201F5D7B00AC747C /* lock_4.png in Resources */,
 				849F33E7201F5D5000AC747C /* fingerprint_4.png in Resources */,
 				8430C5382010933F00BDB200 /* LaunchScreen.storyboard in Resources */,
 				849F33D7201F231500AC747C /* bluetooth_disabled.png in Resources */,
 				849F33D4201F209400AC747C /* bluetooth_scan0.png in Resources */,
 				0DD418222019F7B80016BA2D /* ClearSans-Medium.ttf in Resources */,
+				846549B72020B6E60010788C /* statusOff.png in Resources */,
 				0DD418252019F7B80016BA2D /* ClearSans-Thin.ttf in Resources */,
+				846549B220206B1F0010788C /* fingerprint_1.png in Resources */,
 				8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */,
 				849F33F6201F5D7B00AC747C /* lock_2.png in Resources */,
 				849F33F5201F5D7B00AC747C /* lock_1.png in Resources */,
@@ -468,9 +486,11 @@
 				849F33D2201F209400AC747C /* bluetooth_scan2.png in Resources */,
 				0DD418282019F7B80016BA2D /* ClearSans-Light.ttf in Resources */,
 				849F33FB201F687200AC747C /* lock_6.png in Resources */,
+				846549BB2020B9C20010788C /* statusSearch.png in Resources */,
 				8430C5352010933F00BDB200 /* Assets.xcassets in Resources */,
 				849F33EA201F5D5000AC747C /* fingerprint_5.png in Resources */,
 				849F33D3201F209400AC747C /* bluetooth_scan1.png in Resources */,
+				846549B52020B6C60010788C /* statusOk.png in Resources */,
 				8430C5302010933F00BDB200 /* Main.storyboard in Resources */,
 				849F33EC201F5D5000AC747C /* fingerprint_7.png in Resources */,
 				849F33E8201F5D5000AC747C /* fingerprint_10.png in Resources */,

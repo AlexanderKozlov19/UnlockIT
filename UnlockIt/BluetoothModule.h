@@ -17,6 +17,7 @@
 
 -(BOOL)isBluetoothReady;
 -(BOOL)isScanning;
+-(CBManagerState)askForCentralManagerState;
 
 
 
@@ -25,7 +26,9 @@
 
 -(void)unlockIt:(NSString*)uuid;
 
+-(void)forgetDeviceWithUUID:(NSString*)uuid;
 @property (nonatomic, strong) NSMutableArray *peripheralsBLE;
+
 
 
 @end

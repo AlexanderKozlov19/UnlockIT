@@ -11,6 +11,22 @@
 @protocol ViewControllerProtocol <NSObject>
 
 -(void)updateBluetoothState:(BOOL)state withText:(NSString*)stateText;
+-(void)updateBioAuthorization:(BOOL)state;
+-(void)updateLockStatus:(NSString*)stateText;
+
+-(void)updateTable;
+-(void)resetCellAfterUnlock:(NSInteger)numberOfRaw;
+
+-(void)startBLEScanAnimation;
+-(void)stopBLEScanAnimation;
+-(void)startFingerPrintAnimation;
+-(void)stopFingerPrintAnimation;
+-(void)startLockAnimation;
+
+-(void)setupTableViewSelectors:(BOOL)showOnlyActiveLocks;
+-(void)showAllLocksCount:(NSInteger)count;
+-(void)showActiveLocksCount:(NSInteger)count;
+
 
 
 @end

@@ -95,10 +95,12 @@
             }
         }
     
-      [peripheral discoverServices:nil];
-       [peripheral readRSSI];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverPeripheral" object:peripheral ];
     
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverPeripheral" object:peripheral ];
+    [peripheral discoverServices:nil];
+    [peripheral readRSSI];
+    
+    
 };
 
 - (void) centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
@@ -131,7 +133,13 @@
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
     for ( CBCharacteristic *charactersitc in service.characteristics )
         [peripheral discoverDescriptorsForCharacteristic:charactersitc];
-
+    
+    if ( [service.UUID.UUIDString isEqualToString:@"1815"]) 
+        for ( CBCharacteristic *characteristic in service.characteristics )
+            if ( [characteristic.UUID.UUIDString isEqualToString:@"2A56"]) {
+                 [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverUnlock" object:peripheral ];
+            }
+  
 }
 
 - (void)peripheralDidUpdateName:(CBPeripheral *)peripheral {
@@ -147,7 +155,7 @@
     for ( NSMutableDictionary *dictionary in peripheralsBLE ) {
         if ( [dictionary[@"CBPeripheral"] isEqual:peripheral] ) {
             [dictionary setValue:RSSI forKey:@"RSSI"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateRSSI" object:peripheral ];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UpdateRSSI" object:dictionary ];
             break;
         }
         
@@ -160,6 +168,8 @@
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
     NSLog(@"writeValueForCharacteristic: %@", error.localizedDescription);
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"Unlocked" object:error ];
+    
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverDescriptorsForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
@@ -180,6 +190,10 @@
     return ( centralManager.state == CBManagerStatePoweredOn );
 }
 
+-(CBManagerState)askForCentralManagerState {
+    return centralManager.state;
+}
+
 -(BOOL)isScanning {
     return isScanningBLE;
 }
@@ -187,6 +201,11 @@
 -(void)startScan:(BOOL)onlyLocks {
     if ( isScanningBLE )
         [self stopScan];
+    
+    for ( NSMutableDictionary *peripheralDict in peripheralsBLE ) {
+        CBPeripheral *peripheral = peripheralDict[@"CBPeripheral"];
+        [centralManager cancelPeripheralConnection:peripheral];
+    }
     
     [peripheralsBLE removeAllObjects];
     
@@ -203,12 +222,12 @@
 
     [centralManager stopScan];
     isScanningBLE = NO;
-    
+    /*
     for ( NSMutableDictionary *peripheralDict in peripheralsBLE ) {
         CBPeripheral *peripheral = peripheralDict[@"CBPeripheral"];
         [centralManager cancelPeripheralConnection:peripheral];
     }
-    
+    */
     NSLog(@"Bluetooth: stopScan");
 
     
@@ -223,8 +242,8 @@
             
             if ( ( peripheral.state == CBPeripheralStateDisconnected ) || ( peripheral.state == CBPeripheralStateDisconnecting ) ) {
                 dict[@"NeedUnlock"] = @YES;
-                if ( !self->isScanningBLE )
-                     [centralManager scanForPeripheralsWithServices:nil options:nil];
+              //  if ( !self->isScanningBLE )
+              //       [centralManager scanForPeripheralsWithServices:nil options:nil];
                 [centralManager connectPeripheral:peripheral options:nil];
                 return;
             }
@@ -252,6 +271,20 @@
         }
     }
         
+}
+
+#pragma mark - Work with device list
+-(void)forgetDeviceWithUUID:(NSString*)uuid {
+    for ( NSMutableDictionary *dictionary in peripheralsBLE ) {
+        CBPeripheral *peripheral = dictionary[@"CBPeripheral"];
+        if ( [peripheral.identifier.UUIDString isEqual:uuid] ) {
+            if ( peripheral.state == CBPeripheralStateConnected )
+                 [centralManager cancelPeripheralConnection:peripheral];
+            [peripheralsBLE removeObject:dictionary];
+            break;
+        }
+    }
+    
 }
 
 
