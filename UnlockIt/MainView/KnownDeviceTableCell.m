@@ -16,6 +16,7 @@ static CGFloat const kBounceValue = 20.0f;
     [super awakeFromNib];
     
     self.isPanning = false;
+    self.isUnlockEnable = false;
     
     self.panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     self.panRecognizer.delegate = self;
@@ -103,6 +104,10 @@ static CGFloat const kBounceValue = 20.0f;
                     //CGFloat constant = MAX(adjustment, self.unlockLabelWidth); //2
                     if ( adjustment < self.unlockLabelWidth )
                         adjustment = self.unlockLabelWidth;
+                    
+                    // unlock is unable is lock is unavailable
+                    if ( ( adjustment < 0 ) && !self.isUnlockEnable )
+                        return;
                         
                     if (adjustment == 0) { //3
                         [self resetConstraintContstantsToZero:YES notifyDelegateDidClose:NO];

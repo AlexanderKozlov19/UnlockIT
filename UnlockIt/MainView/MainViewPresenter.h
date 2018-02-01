@@ -27,6 +27,7 @@
 -(NSString*)nameForLocK:(NSInteger)number;
 -(NSString*)uuidForLock:(NSInteger)number;
 -(NSString*)statusNameForLock:(NSInteger)number;
+-(BOOL)isUnlockAvailable:(NSInteger)number;
 
 -(void)storeName:(NSString*)name forLock:(NSInteger)lockNumber;
 -(void)forgetLock:(NSInteger)lockNumber;

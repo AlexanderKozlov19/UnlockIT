@@ -29,7 +29,7 @@
                                                            [UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName,
                                                            shadow, NSShadowAttributeName,
                                                            [UIFont fontWithName:@"ClearSans" size:23.0], NSFontAttributeName, nil];
-    [self.navigationController.navigationBar  setBackgroundImage:[UIImage imageNamed:@"backImage.png"] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar  setBackgroundImage:[[UIImage imageNamed:@"backImage.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0) resizingMode:UIImageResizingModeStretch] forBarMetrics:UIBarMetricsDefault];
     
     //---- selectors for locks
     UITapGestureRecognizer *tapRecognizer= [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTableLocksViewModeChanged:)];
@@ -59,21 +59,23 @@
     
     
     //----- view configuration
-    [self.knownDevicesTable setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    //[self.knownDevicesTable setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
     self.knownDevicesTable.delegate = self;
     self.knownDevicesTable.dataSource = self;
     
     self.knownDevicesTable.layer.borderWidth = 1.0;
     self.knownDevicesTable.layer.borderColor = [[self colorFmHex:0x06 greenPart:0x7A bluePart:0xB5] CGColor];
-    self.knownDevicesTable.backgroundColor = [self colorFmHex:0xFA greenPart:0xFA bluePart:0xFB];
+   
+     self.knownDevicesTable.backgroundColor = [self colorFmHex:0xFA greenPart:0xFA bluePart:0xFB];
     self.knownDevicesTable.layer.shadowColor = [[self colorFmHex:0x92 greenPart:0xA8 bluePart:0xC1] CGColor];
     self.knownDevicesTable.layer.shadowOffset = CGSizeMake(0, 3);
     self.knownDevicesTable.layer.shadowOpacity = 0.5;
-    self.knownDevicesTable.layer.masksToBounds = NO;
-  
-    
+   // self.knownDevicesTable.layer.masksToBounds = NO;
+
     [self.lockStatusImage setImage:[UIImage imageNamed:@"lock_1.png"]];
+    
+    [self setupTableViewSelectors:YES];
     
     //---- start Bluetooth
     [presenter startBluetooth];
@@ -147,7 +149,7 @@
     
     CGRect newFrame = self.statusAllLocks.frame;
     newFrame.size.height = showOnlyActiveLocks ? 1 : 2;
-    newFrame.origin.y = showOnlyActiveLocks ? 101: 100;
+    newFrame.origin.y = self.allLocksLabel.frame.origin.y + self.allLocksLabel.frame.size.height + ( showOnlyActiveLocks ? 1: 0 );
     
     self.statusAllLocks.backgroundColor = showOnlyActiveLocks ? [self colorFmHex:0x92 greenPart:0xA8 bluePart:0xC1]: [self colorFmHex:0x06 greenPart:0x7A bluePart:0xB5];
     
@@ -156,7 +158,7 @@
     
     CGRect newFrame2 = self.statusActiveLocks.frame;
     newFrame2.size.height = showOnlyActiveLocks ? 2: 1;
-    newFrame2.origin.y = showOnlyActiveLocks ? 100 : 101;
+    newFrame2.origin.y = self.activeLocksLabel.frame.origin.y + self.activeLocksLabel.frame.size.height + ( showOnlyActiveLocks ?  0: 1 );
     self.statusActiveLocks.backgroundColor = showOnlyActiveLocks ? [self colorFmHex:0x06 greenPart:0x7A bluePart:0xB5] : [self colorFmHex:0x92 greenPart:0xA8 bluePart:0xC1] ;
     
     self.statusActiveLocks.frame = newFrame2;
@@ -245,17 +247,18 @@
 
 #pragma mark - Work with View
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
     return [presenter askForLocksCountForTableView];
 }
 
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if ( indexPath.row < presenter.numberOfDispalyingLocks) {
         
-            KnownDeviceTableCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"knownDeviceTableCell"];
+           KnownDeviceTableCell *tableCell = [tableView dequeueReusableCellWithIdentifier:@"knownDeviceTableCell"];
             tableCell.numberOfDataRow = indexPath.row;
             tableCell.delegate = self;
             
@@ -266,8 +269,12 @@
             [tableCell.storedUUID sizeToFit];
         
             [tableCell.statusImage setImage:[UIImage imageNamed:[presenter statusNameForLock:indexPath.row]]];
+        
+            [tableCell setIsUnlockEnable:[presenter isUnlockAvailable:indexPath.row ]];
             
             cell = tableCell;
+
+            
         
     }
     

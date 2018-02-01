@@ -20,6 +20,17 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSFaceIDUsageDescription </key>
+	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Sanitrixie.ttf</string>
+		<string>ClearSans-Bold.ttf</string>
+		<string>ClearSans-Light.ttf</string>
+		<string>ClearSans-Medium.ttf</string>
+		<string>ClearSans-Regular.ttf</string>
+		<string>ClearSans-Thin.ttf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
@@ -35,8 +46,9 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -44,17 +56,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>NSFaceIDUsageDescription </key>
-	<string></string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Sanitrixie.ttf</string>
-		<string>ClearSans-Bold.ttf</string>
-		<string>ClearSans-Light.ttf</string>
-		<string>ClearSans-Medium.ttf</string>
-		<string>ClearSans-Regular.ttf</string>
-		<string>ClearSans-Thin.ttf</string>
 	</array>
 </dict>
 </plist>

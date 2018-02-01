@@ -43,5 +43,6 @@
 @property (nonatomic, assign) int initialState;
 
 @property (nonatomic, assign) BOOL isPanning;
+@property (nonatomic, assign) BOOL isUnlockEnable;
 
 @end

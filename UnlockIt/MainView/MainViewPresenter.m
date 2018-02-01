@@ -43,6 +43,17 @@
             [devicesArray addObject:mutableDictionary];
         }
         
+        
+         NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
+        [mutableDictionary setObject:@"Test" forKey:@"Name"];
+        [mutableDictionary setObject:@"111-222" forKey:@"UUID"];
+         [mutableDictionary setObject:[NSNumber numberWithInt:-10]  forKey:@"RSSI"];
+        [mutableDictionary setObject:@YES forKey:@"active"];
+        [mutableDictionary setObject:@YES forKey:@"UnlockAvailable"];
+
+        for ( int a = 0; a < 10; a ++)
+        [devicesArray addObject:mutableDictionary];
+        
         //----- NSNotifications
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(onManagerDidUpdateState:)
@@ -381,6 +392,11 @@
     else
         return @"statusOk.png";
     
+}
+
+-(BOOL)isUnlockAvailable:(NSInteger)number {
+    NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
+    return ( [dict[@"active"] isEqual:@1 ]);
 }
 
 #pragma mark - Work with data
