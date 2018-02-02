@@ -11,6 +11,7 @@
 @implementation KnownDeviceTableCell
 
 static CGFloat const kBounceValue = 20.0f;
+static CGFloat const maxBatteryLevelWidth = 20.0f;
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -21,6 +22,10 @@ static CGFloat const kBounceValue = 20.0f;
     self.panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     self.panRecognizer.delegate = self;
     [self.cellContentView addGestureRecognizer:self.panRecognizer];
+    
+    [self.batteryLevelImage setImage:[UIImage imageNamed:@"emptybattery.png"]];
+    
+  
     
     //self.buttonVolumeIncrease.layer.borderWidth = 1.0;
    // self.buttonVolumeIncrease.layer.borderColor = [[UIColor colorWithRed:1.0/(float)0x06 green:1.0/(float)0x7a blue:1.0/(float)0xB5 alpha:1.0] CGColor];
@@ -180,7 +185,12 @@ static CGFloat const kBounceValue = 20.0f;
 }
 
 - (CGFloat)buttonTotalWidth {
-    return CGRectGetWidth(self.frame) - CGRectGetMinX(self.buttonRename.frame);
+    CGFloat result = CGRectGetWidth(self.frame) - CGRectGetMinX(self.buttonRename.frame);
+    if (@available(iOS 11.0, *)) {
+        result -= ( self.safeAreaInsets.left + self.safeAreaInsets.right );
+    }
+
+    return result;
 }
 
 -(CGFloat)unlockLabelWidth {
@@ -262,5 +272,47 @@ static CGFloat const kBounceValue = 20.0f;
     [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self layoutIfNeeded];
     } completion:completion];
+}
+
+-(void)showRSSI:(NSInteger)level {
+    if ( level < 0 ) {
+        [self.storedUUID setText:@""];
+        self.levelImage.image = nil;
+    }
+    else {
+        [self.storedUUID setText:[[NSMutableString stringWithFormat:@"%ld", (long)level] stringByAppendingString:@"%"] ];
+        if ( level == 0 )
+            [self.levelImage setImage:[UIImage imageNamed:@"level_0.png"]];
+        if ( level < 25 )
+            [self.levelImage setImage:[UIImage imageNamed:@"level_25.png"]];
+        else
+            if ( level < 50 )
+                [self.levelImage setImage:[UIImage imageNamed:@"level_50.png"]];
+        else
+            if ( level < 75 )
+                [self.levelImage setImage:[UIImage imageNamed:@"level_75.png"]];
+        else
+        if ( level >= 90 )
+            [self.levelImage setImage:[UIImage imageNamed:@"level_100.png"]];
+    }
+    
+}
+
+-(void)showBatteryLevel:(NSInteger)level {
+    if ( level < 0 ) {
+        [self.batteryLevelPercentage setText:@""];
+        self.batteryLevelImage.hidden = true;
+        self.batteryLevelInside.hidden = true;
+    }
+    else {
+        self.batteryLevelImage.hidden = false;
+        self.batteryLevelInside.hidden = false;
+        [self.batteryLevelPercentage setText:[[NSMutableString stringWithFormat:@"%ld", (long)level] stringByAppendingString:@"%"] ];
+        self.batteryLevel.constant = ((CGFloat)level)*maxBatteryLevelWidth/100.0;
+        if ( self.batteryLevel.constant > maxBatteryLevelWidth )
+            self.batteryLevel.constant = maxBatteryLevelWidth;
+        
+        
+    }
 }
 @end

@@ -47,6 +47,14 @@
 		8430C57720122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C57820122C7E00BDB200 /* PeripheralInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */; };
 		8430C5BC2016143200BDB200 /* KnownDeviceTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */; };
+		844E589220249C4B00F53F45 /* faceIDDis.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E589020249C4B00F53F45 /* faceIDDis.png */; };
+		844E589420249DDB00F53F45 /* faceIDOk.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E589320249DDB00F53F45 /* faceIDOk.png */; };
+		844E58962024A9A000F53F45 /* emptybattery.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E58952024A9A000F53F45 /* emptybattery.png */; };
+		844E589D2024B7DD00F53F45 /* level_75.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E58982024B7DC00F53F45 /* level_75.png */; };
+		844E589E2024B7DD00F53F45 /* level_50.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E58992024B7DC00F53F45 /* level_50.png */; };
+		844E589F2024B7DD00F53F45 /* level_0.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E589A2024B7DC00F53F45 /* level_0.png */; };
+		844E58A02024B7DD00F53F45 /* level_25.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E589B2024B7DD00F53F45 /* level_25.png */; };
+		844E58A12024B7DD00F53F45 /* level_100.png in Resources */ = {isa = PBXBuildFile; fileRef = 844E589C2024B7DD00F53F45 /* level_100.png */; };
 		846549B220206B1F0010788C /* fingerprint_1.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B120206B1F0010788C /* fingerprint_1.png */; };
 		846549B52020B6C60010788C /* statusOk.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B42020B6C60010788C /* statusOk.png */; };
 		846549B72020B6E60010788C /* statusOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 846549B62020B6E60010788C /* statusOff.png */; };
@@ -131,6 +139,14 @@
 		8430C57520122C7E00BDB200 /* PeripheralInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeripheralInfoCell.m; sourceTree = "<group>"; };
 		8430C5BA2016143200BDB200 /* KnownDeviceTableCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KnownDeviceTableCell.h; path = UnlockIt/MainView/KnownDeviceTableCell.h; sourceTree = SOURCE_ROOT; };
 		8430C5BB2016143200BDB200 /* KnownDeviceTableCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = KnownDeviceTableCell.m; path = UnlockIt/MainView/KnownDeviceTableCell.m; sourceTree = SOURCE_ROOT; };
+		844E589020249C4B00F53F45 /* faceIDDis.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = faceIDDis.png; sourceTree = "<group>"; };
+		844E589320249DDB00F53F45 /* faceIDOk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = faceIDOk.png; path = ../../../../icons/faceIDOk.png; sourceTree = "<group>"; };
+		844E58952024A9A000F53F45 /* emptybattery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = emptybattery.png; sourceTree = "<group>"; };
+		844E58982024B7DC00F53F45 /* level_75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level_75.png; sourceTree = "<group>"; };
+		844E58992024B7DC00F53F45 /* level_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level_50.png; sourceTree = "<group>"; };
+		844E589A2024B7DC00F53F45 /* level_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level_0.png; sourceTree = "<group>"; };
+		844E589B2024B7DD00F53F45 /* level_25.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level_25.png; sourceTree = "<group>"; };
+		844E589C2024B7DD00F53F45 /* level_100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = level_100.png; sourceTree = "<group>"; };
 		846549B120206B1F0010788C /* fingerprint_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fingerprint_1.png; sourceTree = "<group>"; };
 		846549B42020B6C60010788C /* statusOk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusOk.png; sourceTree = "<group>"; };
 		846549B62020B6E60010788C /* statusOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusOff.png; sourceTree = "<group>"; };
@@ -292,6 +308,27 @@
 			path = PeripheralView;
 			sourceTree = "<group>";
 		};
+		844E588E20249C3E00F53F45 /* FaceID */ = {
+			isa = PBXGroup;
+			children = (
+				844E589320249DDB00F53F45 /* faceIDOk.png */,
+				844E589020249C4B00F53F45 /* faceIDDis.png */,
+			);
+			path = FaceID;
+			sourceTree = "<group>";
+		};
+		844E58972024B7C200F53F45 /* Levels */ = {
+			isa = PBXGroup;
+			children = (
+				844E589A2024B7DC00F53F45 /* level_0.png */,
+				844E589B2024B7DD00F53F45 /* level_25.png */,
+				844E58992024B7DC00F53F45 /* level_50.png */,
+				844E58982024B7DC00F53F45 /* level_75.png */,
+				844E589C2024B7DD00F53F45 /* level_100.png */,
+			);
+			path = Levels;
+			sourceTree = "<group>";
+		};
 		846549B32020B6B80010788C /* Status */ = {
 			isa = PBXGroup;
 			children = (
@@ -305,7 +342,10 @@
 		849F33CC201F206C00AC747C /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				844E58972024B7C200F53F45 /* Levels */,
+				844E58952024A9A000F53F45 /* emptybattery.png */,
 				0DD418182019E9A10016BA2D /* backImage.png */,
+				844E588E20249C3E00F53F45 /* FaceID */,
 				846549B32020B6B80010788C /* Status */,
 				849F33EF201F5D6700AC747C /* Lock */,
 				849F33D8201F3F5400AC747C /* Fingerprint */,
@@ -473,23 +513,30 @@
 				849F33F8201F5D7B00AC747C /* lock_4.png in Resources */,
 				849F33E7201F5D5000AC747C /* fingerprint_4.png in Resources */,
 				8430C5382010933F00BDB200 /* LaunchScreen.storyboard in Resources */,
+				844E58A02024B7DD00F53F45 /* level_25.png in Resources */,
 				849F33D7201F231500AC747C /* bluetooth_disabled.png in Resources */,
+				844E589220249C4B00F53F45 /* faceIDDis.png in Resources */,
 				849F33D4201F209400AC747C /* bluetooth_scan0.png in Resources */,
 				0DD418222019F7B80016BA2D /* ClearSans-Medium.ttf in Resources */,
 				846549B72020B6E60010788C /* statusOff.png in Resources */,
+				844E589D2024B7DD00F53F45 /* level_75.png in Resources */,
 				0DD418252019F7B80016BA2D /* ClearSans-Thin.ttf in Resources */,
 				846549B220206B1F0010788C /* fingerprint_1.png in Resources */,
 				8430C56C2010EAFC00BDB200 /* Images.xcassets in Resources */,
 				849F33F6201F5D7B00AC747C /* lock_2.png in Resources */,
+				844E58A12024B7DD00F53F45 /* level_100.png in Resources */,
 				849F33F5201F5D7B00AC747C /* lock_1.png in Resources */,
 				849F33BD2018C51E00AC747C /* Sanitrixie.ttf in Resources */,
 				849F33D2201F209400AC747C /* bluetooth_scan2.png in Resources */,
+				844E58962024A9A000F53F45 /* emptybattery.png in Resources */,
 				0DD418282019F7B80016BA2D /* ClearSans-Light.ttf in Resources */,
 				849F33FB201F687200AC747C /* lock_6.png in Resources */,
 				846549BB2020B9C20010788C /* statusSearch.png in Resources */,
 				8430C5352010933F00BDB200 /* Assets.xcassets in Resources */,
 				849F33EA201F5D5000AC747C /* fingerprint_5.png in Resources */,
 				849F33D3201F209400AC747C /* bluetooth_scan1.png in Resources */,
+				844E589F2024B7DD00F53F45 /* level_0.png in Resources */,
+				844E589E2024B7DD00F53F45 /* level_50.png in Resources */,
 				846549B52020B6C60010788C /* statusOk.png in Resources */,
 				8430C5302010933F00BDB200 /* Main.storyboard in Resources */,
 				849F33EC201F5D5000AC747C /* fingerprint_7.png in Resources */,
@@ -498,6 +545,7 @@
 				849F33D5201F209400AC747C /* bluetooth_scan3.png in Resources */,
 				849F33DB201F3F6300AC747C /* fingerprintDis.png in Resources */,
 				0DD4181F2019F7B80016BA2D /* ClearSans-Regular.ttf in Resources */,
+				844E589420249DDB00F53F45 /* faceIDOk.png in Resources */,
 				849F33F9201F5D7B00AC747C /* lock_5.png in Resources */,
 				849F33ED201F5D5000AC747C /* fingerprint_8.png in Resources */,
 				849F33EB201F5D5000AC747C /* fingerprint_3.png in Resources */,

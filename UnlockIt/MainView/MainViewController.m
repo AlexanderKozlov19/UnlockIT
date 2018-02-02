@@ -111,14 +111,22 @@
     [self.knownDevicesTable reloadData];
 }
 
--(void)updateBioAuthorization:(BOOL)state {
+-(void)updateBioAuthorization:(BOOL)state forType:(int)biometryType {
     
     if ( state ) {
-        [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprint_1.png"]];
+        if ( biometryType == 1 )
+             [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprint_1.png"]];
+        else
+            if ( biometryType == 2 )
+                [self.bioIDStatusImage setImage:[UIImage imageNamed:@"faceIDOk.png"]];
         [self.bioIDstatus setText:@"Ready"];
     }
     else {
-        [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprintDis.png"]];
+        if ( biometryType == 1 )
+            [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprintDis.png"]];
+        else
+            if ( biometryType == 2 )
+                [self.bioIDStatusImage setImage:[UIImage imageNamed:@"faceIDDis.png"]];
         [self.bioIDstatus setText:@"Unavailable"];
     }
 }
@@ -264,9 +272,12 @@
             
             [tableCell.storedName setText:[presenter nameForLocK:indexPath.row]];
             [tableCell.storedName sizeToFit];
+        
+            [tableCell showRSSI:[presenter rssiForLock:indexPath.row]];
+            [tableCell showBatteryLevel:[presenter batteryLevelForLock:indexPath.row]];
             
-            [tableCell.storedUUID setText:[presenter uuidForLock:indexPath.row]];
-            [tableCell.storedUUID sizeToFit];
+            //[tableCell.storedUUID setText:[presenter uuidForLock:indexPath.row]];
+            //[tableCell.storedUUID sizeToFit];
         
             [tableCell.statusImage setImage:[UIImage imageNamed:[presenter statusNameForLock:indexPath.row]]];
         

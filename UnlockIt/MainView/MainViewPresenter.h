@@ -27,12 +27,15 @@
 -(NSString*)nameForLocK:(NSInteger)number;
 -(NSString*)uuidForLock:(NSInteger)number;
 -(NSString*)statusNameForLock:(NSInteger)number;
+-(NSInteger)rssiForLock:(NSInteger)number;
+-(NSInteger)batteryLevelForLock:(NSInteger)number;
 -(BOOL)isUnlockAvailable:(NSInteger)number;
 
 -(void)storeName:(NSString*)name forLock:(NSInteger)lockNumber;
 -(void)forgetLock:(NSInteger)lockNumber;
 
 -(void)unlockDevice:(NSInteger)number;
+
 
 
 

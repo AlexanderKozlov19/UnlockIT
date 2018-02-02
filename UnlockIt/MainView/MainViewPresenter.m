@@ -15,6 +15,7 @@
     NSMutableArray *devicesArray, *activeDevicesArray, *showingDevicesArray;
     LAContext *laContext;
     BOOL    isModeShowActiveLocks;
+    int     biometryType;
 }
 
 @synthesize view, numberOfDispalyingLocks;
@@ -25,6 +26,7 @@
         //--- varibale initialization
         automaticStartScanForBLE = true;
         isModeShowActiveLocks = true;
+        biometryType = 1;   // 0 - none; 1 - touchID; 2 - FaceID
         
         devicesArray = [[NSMutableArray alloc] init];
         
@@ -47,7 +49,8 @@
          NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
         [mutableDictionary setObject:@"Test" forKey:@"Name"];
         [mutableDictionary setObject:@"111-222" forKey:@"UUID"];
-         [mutableDictionary setObject:[NSNumber numberWithInt:-10]  forKey:@"RSSI"];
+        [mutableDictionary setObject:[NSNumber numberWithInt:-65]  forKey:@"RSSI"];
+        [mutableDictionary setObject:[NSNumber numberWithInt:15]  forKey:@"BatteryLevel"];
         [mutableDictionary setObject:@YES forKey:@"active"];
         [mutableDictionary setObject:@YES forKey:@"UnlockAvailable"];
 
@@ -252,10 +255,22 @@
 
 -(void)checkBioID {
     laContext = [[LAContext alloc] init];
+    
+
     NSError *error;
     BOOL bRes = [laContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
                                             error:&error];
-    [view updateBioAuthorization:bRes];
+    
+    if (@available(iOS 11.0, *)) {
+        if ( laContext.biometryType == LABiometryTypeFaceID )
+            biometryType = 2;
+        else
+            if ( laContext.biometryType == LABiometryTypeTouchID )
+                biometryType = 1;
+            else
+                biometryType = 0;
+    }
+    [view updateBioAuthorization:bRes forType:biometryType];
     
     [laContext invalidate];
 }
@@ -311,17 +326,18 @@
     
     if ( !bRes ) {
         NSLog(@"can't initialize Autentification");
-        [view updateBioAuthorization:bRes];
+        [view updateBioAuthorization:bRes forType:biometryType];
         return;
     }
-    
-    [view startFingerPrintAnimation];
+    if ( biometryType == 1 )
+        [view startFingerPrintAnimation];
 
     [laContext evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"UnlockIT" reply:^(BOOL success, NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             if (success) {
                 NSLog(@"unlock with TouchID!");
-                [view stopFingerPrintAnimation];
+                if ( biometryType == 1 )
+                    [view stopFingerPrintAnimation];
                 [laContext invalidate];
                 
                 NSMutableDictionary *dictionary = [showingDevicesArray objectAtIndex:number];
@@ -330,7 +346,8 @@
                 [view resetCellAfterUnlock:number];
             } else {
                 NSLog(@"TouchID error: %@", error.description );
-                [view stopFingerPrintAnimation];
+                if ( biometryType == 1)
+                    [view stopFingerPrintAnimation];
                 [laContext invalidate];
                 [view resetCellAfterUnlock:number];
             }
@@ -377,8 +394,8 @@
 
 -(NSString*)uuidForLock:(NSInteger)number {
     NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
-    if ( [dict objectForKey:@"RSSI" ] )
-        return [[NSString alloc] initWithFormat:@"%@", [dict objectForKey:@"RSSI"]];
+    if ( [dict objectForKey:@"UUID" ] )
+        return [dict objectForKey:@"UUID" ];
     else
         return @"";
 }
@@ -392,6 +409,33 @@
     else
         return @"statusOk.png";
     
+}
+
+-(NSInteger)rssiForLock:(NSInteger)number {
+    NSInteger result = -1;  // no RSSI
+    NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
+    if ( [dict objectForKey:@"RSSI" ] ) {
+        NSNumber *sourceRSSI = [dict objectForKey:@"RSSI" ] ;
+        NSInteger number = [sourceRSSI integerValue];
+        if ( number >= -50 ) result = 100;
+        else
+            if ( number <= -100 ) result = 0;
+        else
+            result = 2 * ( number + 100 );
+    }
+        
+    return result;
+}
+
+-(NSInteger)batteryLevelForLock:(NSInteger)number {
+    NSInteger result = -1;  // no RSSI
+    NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
+    if ( [dict objectForKey:@"BatteryLevel" ] ) {
+        NSNumber *level = [dict objectForKey:@"BatteryLevel" ] ;
+        result = [level integerValue];
+        
+    }
+    return  result;
 }
 
 -(BOOL)isUnlockAvailable:(NSInteger)number {

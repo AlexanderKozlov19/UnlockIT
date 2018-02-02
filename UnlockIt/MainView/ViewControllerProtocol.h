@@ -11,7 +11,7 @@
 @protocol ViewControllerProtocol <NSObject>
 
 -(void)updateBluetoothState:(BOOL)state withText:(NSString*)stateText;
--(void)updateBioAuthorization:(BOOL)state;
+-(void)updateBioAuthorization:(BOOL)state forType:(int)biometryType;
 -(void)updateLockStatus:(NSString*)stateText;
 
 -(void)updateTable;

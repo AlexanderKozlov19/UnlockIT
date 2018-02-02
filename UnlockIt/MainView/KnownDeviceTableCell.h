@@ -35,6 +35,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *buttonVolumeIncrease;
 @property (weak, nonatomic) IBOutlet UIButton *buttonVolumeDecrease;
 @property (weak, nonatomic) IBOutlet UIImageView *statusImage;
+@property (weak, nonatomic) IBOutlet UIImageView *batteryLevelImage;
+@property (weak, nonatomic) IBOutlet UIImageView *levelImage;
+@property (weak, nonatomic) IBOutlet UIImageView *batteryLevelInside;
+@property (weak, nonatomic) IBOutlet UILabel *batteryLevelPercentage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *batteryLevel;
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, assign) CGPoint panStartPoint;
@@ -44,5 +49,8 @@
 
 @property (nonatomic, assign) BOOL isPanning;
 @property (nonatomic, assign) BOOL isUnlockEnable;
+
+-(void)showRSSI:(NSInteger)level;
+-(void)showBatteryLevel:(NSInteger)level;
 
 @end
