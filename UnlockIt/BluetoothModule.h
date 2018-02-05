@@ -23,6 +23,7 @@
 
 -(void)startScan:(BOOL)onlyLocks;
 -(void)stopScan;
+-(void)disconnectPeripherals;
 
 -(void)unlockIt:(NSString*)uuid;
 

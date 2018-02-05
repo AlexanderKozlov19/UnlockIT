@@ -202,10 +202,7 @@
     if ( isScanningBLE )
         [self stopScan];
     
-    for ( NSMutableDictionary *peripheralDict in peripheralsBLE ) {
-        CBPeripheral *peripheral = peripheralDict[@"CBPeripheral"];
-        [centralManager cancelPeripheralConnection:peripheral];
-    }
+    [self disconnectPeripherals];
     
     [peripheralsBLE removeAllObjects];
     
@@ -231,6 +228,13 @@
     NSLog(@"Bluetooth: stopScan");
 
     
+}
+
+-(void)disconnectPeripherals {
+    for ( NSMutableDictionary *peripheralDict in peripheralsBLE ) {
+        CBPeripheral *peripheral = peripheralDict[@"CBPeripheral"];
+        [centralManager cancelPeripheralConnection:peripheral];
+    }
 }
 
 

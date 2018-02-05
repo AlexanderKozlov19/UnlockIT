@@ -271,7 +271,7 @@
             tableCell.delegate = self;
             
             [tableCell.storedName setText:[presenter nameForLocK:indexPath.row]];
-            [tableCell.storedName sizeToFit];
+            //[tableCell.storedName sizeToFit];
         
             [tableCell showRSSI:[presenter rssiForLock:indexPath.row]];
             [tableCell showBatteryLevel:[presenter batteryLevelForLock:indexPath.row]];

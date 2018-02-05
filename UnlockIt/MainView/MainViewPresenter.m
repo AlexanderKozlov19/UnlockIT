@@ -42,11 +42,12 @@
             [mutableDictionary setObject:@NO forKey:@"active"];
             [mutableDictionary setObject:@NO forKey:@"UnlockAvailable"];
             [mutableDictionary removeObjectForKey:@"RSSI"];
+            [mutableDictionary removeObjectForKey:@"BatteryLevel"];
             [devicesArray addObject:mutableDictionary];
         }
         
         
-         NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
+       /*  NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] init];
         [mutableDictionary setObject:@"Test" forKey:@"Name"];
         [mutableDictionary setObject:@"111-222" forKey:@"UUID"];
         [mutableDictionary setObject:[NSNumber numberWithInt:-65]  forKey:@"RSSI"];
@@ -56,7 +57,7 @@
 
         for ( int a = 0; a < 10; a ++)
         [devicesArray addObject:mutableDictionary];
-        
+        */
         //----- NSNotifications
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(onManagerDidUpdateState:)
@@ -353,6 +354,11 @@
             }
         });
     }];
+}
+
+-(void)disconnectPeripherals {
+    [[BluetoothModule SharedBluetoothModule] disconnectPeripherals];
+    
 }
 
 

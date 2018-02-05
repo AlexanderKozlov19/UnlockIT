@@ -18,6 +18,7 @@
 -(void)startBluetooth;
 -(void)changeScanModeBLE;
 -(void)stopScan;
+-(void)disconnectPeripherals;
 
 -(void)checkBioID;
 

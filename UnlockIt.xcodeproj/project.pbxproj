@@ -343,8 +343,8 @@
 			isa = PBXGroup;
 			children = (
 				844E58972024B7C200F53F45 /* Levels */,
-				844E58952024A9A000F53F45 /* emptybattery.png */,
 				0DD418182019E9A10016BA2D /* backImage.png */,
+				844E58952024A9A000F53F45 /* emptybattery.png */,
 				844E588E20249C3E00F53F45 /* FaceID */,
 				846549B32020B6B80010788C /* Status */,
 				849F33EF201F5D6700AC747C /* Lock */,
