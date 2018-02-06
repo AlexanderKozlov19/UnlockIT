@@ -41,6 +41,7 @@
             NSMutableDictionary *mutableDictionary = [[NSMutableDictionary alloc] initWithDictionary:dictionary];
             [mutableDictionary setObject:@NO forKey:@"active"];
             [mutableDictionary setObject:@NO forKey:@"UnlockAvailable"];
+            [mutableDictionary setObject:@NO forKey:@"BrightnessAvailable"];
             [mutableDictionary removeObjectForKey:@"RSSI"];
             [mutableDictionary removeObjectForKey:@"BatteryLevel"];
             [devicesArray addObject:mutableDictionary];
@@ -82,6 +83,11 @@
         [[NSNotificationCenter defaultCenter] addObserver: self
                                                  selector: @selector(onDiscoverUnlock:)
                                                      name: @"DiscoverUnlock"
+                                                   object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onDiscoverBrightness:)
+                                                     name: @"DiscoverBrightness"
                                                    object: nil];
         
         [[NSNotificationCenter defaultCenter] addObserver: self
@@ -184,9 +190,10 @@
     BOOL foundLock = false;
     
     for ( dictionary in devicesArray )  {
-        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] )
+        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] ) {
             foundLock = true;
-        break;
+            break;
+        }
     }
     
     if ( !foundLock ) {
@@ -199,6 +206,7 @@
     
     [dictionary setObject:@YES forKey:@"active"];
     [dictionary setObject:@NO forKey:@"UnlockAvailable"];
+    [dictionary setObject:@NO forKey:@"BrightnessAvailable"];
     [self showActiveLocksCount];
     [view updateTable];
     
@@ -227,13 +235,35 @@
     BOOL foundLock = false;
     
     for ( dictionary in devicesArray )  {
-        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] )
+        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] ) {
             foundLock = true;
-        break;
+            break;
+        }
     }
     
     if ( foundLock ) {
         [dictionary setObject:@YES forKey:@"UnlockAvailable"];
+        [view updateTable];
+    }
+    
+}
+
+-(void)onDiscoverBrightness:(NSNotification *)data {
+    CBPeripheral *peripheral = data.object;
+    NSLog(@"onDiscoverBrightness: %@", peripheral.name);
+    NSMutableDictionary *dictionary = nil;
+    BOOL foundLock = false;
+    
+    for ( dictionary in devicesArray )  {
+        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] ) {
+            foundLock = true;
+            break;
+        }
+    }
+    
+    if ( foundLock ) {
+        [dictionary setObject:@YES forKey:@"BrightnessAvailable"];
+        [dictionary setObject:[NSNumber numberWithInteger:32768] forKey:@"BrightnessValue"];
         [view updateTable];
     }
     
@@ -328,6 +358,8 @@
     if ( !bRes ) {
         NSLog(@"can't initialize Autentification");
         [view updateBioAuthorization:bRes forType:biometryType];
+        [view resetCellAfterUnlock:number];
+        [view showAlertForUnavailableBioID:number];
         return;
     }
     if ( biometryType == 1 )
@@ -358,6 +390,28 @@
 
 -(void)disconnectPeripherals {
     [[BluetoothModule SharedBluetoothModule] disconnectPeripherals];
+    
+}
+
+-(void)sendBrightnessValueForLock:(NSInteger)number isIncrease:(BOOL)increase {
+    NSMutableDictionary *dictionary = [showingDevicesArray objectAtIndex:number];
+    int storedValue = (int)[dictionary[@"BrightnessValue"] integerValue];
+    if ( increase )
+        storedValue += 1024;
+    else
+        storedValue -= 1024;
+    
+    if ( storedValue < 0)
+        storedValue = 0;
+    
+    if ( storedValue > 65535 )
+        storedValue = 65535;
+    
+    [dictionary setValue:[NSNumber numberWithInteger:storedValue] forKey:@"BrightnessValue"];
+    
+    NSLog(@"send brightness value %d", storedValue);
+    
+    [[BluetoothModule SharedBluetoothModule] chooseBrightness:(short)storedValue forLock:dictionary[@"UUID"]];
     
 }
 
@@ -447,6 +501,11 @@
 -(BOOL)isUnlockAvailable:(NSInteger)number {
     NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
     return ( [dict[@"active"] isEqual:@1 ]);
+}
+
+-(BOOL)isBrightnessAvailableForLock:(NSInteger)number {
+    NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
+    return ( [dict[@"BrightnessAvailable"] isEqual:@1 ]);
 }
 
 #pragma mark - Work with data

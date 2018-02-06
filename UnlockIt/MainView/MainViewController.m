@@ -122,6 +122,7 @@
         [self.bioIDstatus setText:@"Ready"];
     }
     else {
+        
         if ( biometryType == 1 )
             [self.bioIDStatusImage setImage:[UIImage imageNamed:@"fingerprintDis.png"]];
         else
@@ -225,6 +226,25 @@
         [self.allLocksLabel setText:[[NSString alloc] initWithFormat:@"All locks (%ld)", count]];
 }
 
+-(void)showAlertForUnavailableBioID:(NSInteger)lockNumber {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Authentification" message:@"Authentification is disabled for device. Do you want to enable it?"  preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    UIAlertAction *confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"App-Prefs:root=TOUCHID_PASSCODE"] options:[[NSDictionary alloc] init] completionHandler:nil ];
+        
+    }];
+    
+    [alertController addAction:confirmAction];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
 #pragma mark - View actions
 
 -(void)onTableLocksViewModeChanged:(id)sender {
@@ -253,6 +273,15 @@
 
 }
 
+- (void)onBrightnessIncreasePressed:(NSInteger)numInDataRow {
+    [presenter sendBrightnessValueForLock:numInDataRow isIncrease:YES];
+    
+}
+
+- (void)onBrightnessDecreasePressed:(NSInteger)numInDataRow {
+    [presenter sendBrightnessValueForLock:numInDataRow isIncrease:NO];
+}
+
 #pragma mark - Work with View
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [presenter askForLocksCountForTableView];
@@ -271,6 +300,7 @@
             tableCell.delegate = self;
             
             [tableCell.storedName setText:[presenter nameForLocK:indexPath.row]];
+            [tableCell showBrightnessControl:[presenter isBrightnessAvailableForLock:indexPath.row]];
             //[tableCell.storedName sizeToFit];
         
             [tableCell showRSSI:[presenter rssiForLock:indexPath.row]];

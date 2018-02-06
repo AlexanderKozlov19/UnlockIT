@@ -31,11 +31,13 @@
 -(NSInteger)rssiForLock:(NSInteger)number;
 -(NSInteger)batteryLevelForLock:(NSInteger)number;
 -(BOOL)isUnlockAvailable:(NSInteger)number;
+-(BOOL)isBrightnessAvailableForLock:(NSInteger)number;
 
 -(void)storeName:(NSString*)name forLock:(NSInteger)lockNumber;
 -(void)forgetLock:(NSInteger)lockNumber;
 
 -(void)unlockDevice:(NSInteger)number;
+-(void)sendBrightnessValueForLock:(NSInteger)number isIncrease:(BOOL)increase;
 
 
 

@@ -45,7 +45,13 @@ static CGFloat const maxBatteryLevelWidth = 20.0f;
         [self.delegate onDeleteButtonPressed:self.numberOfDataRow];
     } else if (sender == self.buttonRename) {
         [self.delegate onRenameButtonPressed:self.numberOfDataRow];
-    } 
+    }
+    else if ( sender == self.buttonVolumeIncrease ) {
+        [self.delegate onBrightnessIncreasePressed:self.numberOfDataRow];
+    }
+    else if ( sender == self.buttonVolumeDecrease ) {
+        [self.delegate onBrightnessDecreasePressed:self.numberOfDataRow];
+    }
 }
 
 - (void)prepareForReuse {
@@ -314,5 +320,17 @@ static CGFloat const maxBatteryLevelWidth = 20.0f;
         
         
     }
+}
+
+-(void)showBrightnessControl:(BOOL)show {
+    self.brightnessLabel.hidden = !show;
+    self.buttonVolumeDecrease.hidden = self.brightnessLabel.hidden;
+    self.buttonVolumeIncrease.hidden = self.brightnessLabel.hidden;
+    
+}
+- (IBAction)onBrightnessDecrease:(id)sender {
+}
+
+- (IBAction)onBrightnessIncrease:(id)sender {
 }
 @end

@@ -27,6 +27,8 @@
 -(void)showAllLocksCount:(NSInteger)count;
 -(void)showActiveLocksCount:(NSInteger)count;
 
+-(void)showAlertForUnavailableBioID:(NSInteger)lockNumber;
+
 
 
 @end

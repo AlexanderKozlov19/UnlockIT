@@ -139,6 +139,12 @@
             if ( [characteristic.UUID.UUIDString isEqualToString:@"2A56"]) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverUnlock" object:peripheral ];
             }
+    
+    if ( [service.UUID.UUIDString isEqualToString:@"1815"])
+        for ( CBCharacteristic *characteristic in service.characteristics )
+            if ( [characteristic.UUID.UUIDString isEqualToString:@"2A58"]) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverBrightness" object:peripheral ];
+            }
   
 }
 
@@ -275,6 +281,28 @@
         }
     }
         
+}
+
+-(void)chooseBrightness:(short)brightnessValue forLock:(NSString*)uuid {
+    for ( NSMutableDictionary *dict in peripheralsBLE ) {
+        CBPeripheral *peripheral = dict[@"CBPeripheral"];
+        if ( [peripheral.identifier.UUIDString isEqualToString:uuid]) {
+            
+            for ( CBService *serice in peripheral.services ) {
+                if ( [serice.UUID.UUIDString isEqualToString:@"1815"]) {
+                    for ( CBCharacteristic *characteristic in serice.characteristics ) {
+                        if ( [characteristic.UUID.UUIDString isEqualToString:@"2A58"]) {
+                            NSData *data = [NSData dataWithBytes: &brightnessValue length: sizeof(brightnessValue)];
+                            [peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+                        }
+                    }
+                }
+                
+            }
+            break;
+        }
+    }
+    
 }
 
 #pragma mark - Work with device list

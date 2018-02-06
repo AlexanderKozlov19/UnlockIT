@@ -12,6 +12,8 @@
 - (void)onDeleteButtonPressed:(NSInteger)numInDataRow;
 - (void)onRenameButtonPressed:(NSInteger)numInDataRow;
 - (void)onUnlock:(NSInteger)numInDataRow;
+- (void)onBrightnessIncreasePressed:(NSInteger)numInDataRow;
+- (void)onBrightnessDecreasePressed:(NSInteger)numInDataRow;
 @end
 
 @interface KnownDeviceTableCell : UITableViewCell <UIGestureRecognizerDelegate>
@@ -40,6 +42,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *batteryLevelInside;
 @property (weak, nonatomic) IBOutlet UILabel *batteryLevelPercentage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *batteryLevel;
+@property (weak, nonatomic) IBOutlet UILabel *brightnessLabel;
+
+
 
 @property (nonatomic, strong) UIPanGestureRecognizer *panRecognizer;
 @property (nonatomic, assign) CGPoint panStartPoint;
@@ -52,5 +57,6 @@
 
 -(void)showRSSI:(NSInteger)level;
 -(void)showBatteryLevel:(NSInteger)level;
+-(void)showBrightnessControl:(BOOL)show;
 
 @end
