@@ -128,7 +128,10 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
-                                                                <action selector="buttonClicked:" destination="wdQ-S2-ywp" eventType="touchUpInside" id="J4z-FO-k2j"/>
+                                                                <action selector="buttonCancel:" destination="wdQ-S2-ywp" eventType="touchCancel" id="iiR-4x-zzg"/>
+                                                                <action selector="buttonClicked:" destination="wdQ-S2-ywp" eventType="touchDown" id="G7W-fO-FUr"/>
+                                                                <action selector="buttonUp:" destination="wdQ-S2-ywp" eventType="touchUpInside" id="Ddj-XA-Uxt"/>
+                                                                <action selector="buttonUp:" destination="wdQ-S2-ywp" eventType="touchUpOutside" id="quW-7F-0qp"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7z5-Nw-0z1">
@@ -150,7 +153,10 @@
                                                                 </userDefinedRuntimeAttribute>
                                                             </userDefinedRuntimeAttributes>
                                                             <connections>
-                                                                <action selector="buttonClicked:" destination="wdQ-S2-ywp" eventType="touchUpInside" id="DKW-Q6-mzC"/>
+                                                                <action selector="buttonCancel:" destination="wdQ-S2-ywp" eventType="touchCancel" id="pxu-h7-pfw"/>
+                                                                <action selector="buttonClicked:" destination="wdQ-S2-ywp" eventType="touchDown" id="Sxj-Nh-TlM"/>
+                                                                <action selector="buttonUp:" destination="wdQ-S2-ywp" eventType="touchUpOutside" id="DbQ-4t-za4"/>
+                                                                <action selector="buttonUp:" destination="wdQ-S2-ywp" eventType="touchUpInside" id="NsZ-9P-5Dz"/>
                                                             </connections>
                                                         </button>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Shx-tH-icH">

@@ -20,6 +20,9 @@
 @property (nonatomic, weak) id <SwipeableCellDelegate> delegate;
 
 - (IBAction)buttonClicked:(id)sender;
+- (IBAction)buttonUp:(id)sender;
+- (IBAction)buttonCancel:(id)sender;
+
 
 - (void)resetConstraintContstantsToZero:(BOOL)animated notifyDelegateDidClose:(BOOL)endEditing;
 

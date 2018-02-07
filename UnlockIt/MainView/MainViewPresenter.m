@@ -94,6 +94,11 @@
                                                  selector: @selector(onUnlock:)
                                                      name: @"Unlocked"
                                                    object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onBatteryLevel:)
+                                                     name: @"BatteryLevel"
+                                                   object: nil];
  
     }
     return self;
@@ -269,6 +274,32 @@
     
 }
 
+-(void)onBatteryLevel:(NSNotification *)data {
+    NSDictionary *dictionaryIn = data.object;
+    NSLog(@"onBatteryLevel: %@", dictionaryIn[@"UUID"]);
+    NSMutableDictionary *dictionary = nil;
+    BOOL foundLock = false;
+    
+    for ( dictionary in devicesArray )  {
+        if ( [dictionary[@"UUID"] isEqualToString:dictionaryIn[@"UUID"] ] ) {
+            foundLock = true;
+            break;
+        }
+    }
+    
+    if ( foundLock ) {
+        NSData *dataBatteryLevel = dictionaryIn[@"BatteryLevel"];
+        unsigned char valueByte;
+        [dataBatteryLevel getBytes:&valueByte length:sizeof(valueByte)];
+        NSNumber *value = [NSNumber numberWithUnsignedChar:valueByte];
+        [dictionary setObject:value forKey:@"BatteryLevel"];
+        [view updateTable];
+    }
+    
+}
+
+
+
 -(void)onUnlock:(NSNotification *)data {
     NSError *error = data.object;
     
@@ -396,22 +427,25 @@
 -(void)sendBrightnessValueForLock:(NSInteger)number isIncrease:(BOOL)increase {
     NSMutableDictionary *dictionary = [showingDevicesArray objectAtIndex:number];
     int storedValue = (int)[dictionary[@"BrightnessValue"] integerValue];
+    int newValue = storedValue;
     if ( increase )
-        storedValue += 1024;
+        newValue += 2048;
     else
-        storedValue -= 1024;
+        newValue -= 2048;
     
-    if ( storedValue < 0)
-        storedValue = 0;
+    if ( newValue < 0)
+        newValue = 0;
     
-    if ( storedValue > 65535 )
-        storedValue = 65535;
+    if ( newValue > 65535 )
+        newValue = 65535;
     
-    [dictionary setValue:[NSNumber numberWithInteger:storedValue] forKey:@"BrightnessValue"];
+    if ( newValue != storedValue ) {
+        [dictionary setValue:[NSNumber numberWithInteger:newValue] forKey:@"BrightnessValue"];
     
-    NSLog(@"send brightness value %d", storedValue);
+        NSLog(@"send brightness value %d", newValue);
     
-    [[BluetoothModule SharedBluetoothModule] chooseBrightness:(short)storedValue forLock:dictionary[@"UUID"]];
+        [[BluetoothModule SharedBluetoothModule] chooseBrightness:(short)newValue forLock:dictionary[@"UUID"]];
+    }
     
 }
 
@@ -492,7 +526,7 @@
     NSDictionary *dict = [showingDevicesArray objectAtIndex:number];
     if ( [dict objectForKey:@"BatteryLevel" ] ) {
         NSNumber *level = [dict objectForKey:@"BatteryLevel" ] ;
-        result = [level integerValue];
+        result = (NSInteger)[level unsignedCharValue];
         
     }
     return  result;

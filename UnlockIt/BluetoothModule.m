@@ -59,7 +59,7 @@
 
 - (void) centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
     
-    if ( scanOnlyForLocks && ( ![peripheral.name isEqualToString:@"Servo Control"] ) )
+    if ( scanOnlyForLocks && !( [peripheral.name isEqualToString:@"Servo Control"] /*|| [peripheral.name containsString:@"SuperSafe"] */) )
         return;
     
     BOOL isPeripheralExist = false;
@@ -138,12 +138,21 @@
         for ( CBCharacteristic *characteristic in service.characteristics )
             if ( [characteristic.UUID.UUIDString isEqualToString:@"2A56"]) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverUnlock" object:peripheral ];
+                break;
             }
     
     if ( [service.UUID.UUIDString isEqualToString:@"1815"])
         for ( CBCharacteristic *characteristic in service.characteristics )
             if ( [characteristic.UUID.UUIDString isEqualToString:@"2A58"]) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"DiscoverBrightness" object:peripheral ];
+                break;
+            }
+    
+    if ( [service.UUID.UUIDString isEqualToString:@"180F"])
+        for ( CBCharacteristic *characteristic in service.characteristics )
+            if ( [characteristic.UUID.UUIDString isEqualToString:@"2A19"]) {
+                [peripheral readValueForCharacteristic:characteristic];
+                break;
             }
   
 }
@@ -169,12 +178,18 @@
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
-    
+    if ( [characteristic.UUID.UUIDString isEqualToString:@"2A19"]) {
+        NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:peripheral.identifier.UUIDString, @"UUID", characteristic.value, @"value", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BatteryLevel" object:dictionary ];
+    }
+    NSLog(@"value updated");
 }
 
 - (void)peripheral:(CBPeripheral *)peripheral didWriteValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
     NSLog(@"writeValueForCharacteristic: %@", error.localizedDescription);
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"Unlocked" object:error ];
+    
+    if ( [characteristic.UUID.UUIDString isEqualToString:@"2A56"])
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"Unlocked" object:error ];
     
 }
 

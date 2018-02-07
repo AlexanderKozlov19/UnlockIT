@@ -8,7 +8,9 @@
 
 #import "KnownDeviceTableCell.h"
 
-@implementation KnownDeviceTableCell
+@implementation KnownDeviceTableCell {
+    NSTimer *timerRepeat;
+}
 
 static CGFloat const kBounceValue = 20.0f;
 static CGFloat const maxBatteryLevelWidth = 20.0f;
@@ -22,6 +24,11 @@ static CGFloat const maxBatteryLevelWidth = 20.0f;
     self.panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panThisCell:)];
     self.panRecognizer.delegate = self;
     [self.cellContentView addGestureRecognizer:self.panRecognizer];
+    
+    timerRepeat = nil;
+
+    
+
     
     [self.batteryLevelImage setImage:[UIImage imageNamed:@"emptybattery.png"]];
     
@@ -47,12 +54,36 @@ static CGFloat const maxBatteryLevelWidth = 20.0f;
         [self.delegate onRenameButtonPressed:self.numberOfDataRow];
     }
     else if ( sender == self.buttonVolumeIncrease ) {
-        [self.delegate onBrightnessIncreasePressed:self.numberOfDataRow];
+       timerRepeat = [NSTimer timerWithTimeInterval:(NSTimeInterval)0.1 repeats:YES block:^(NSTimer *timer) {
+                 [self.delegate onBrightnessIncreasePressed:self.numberOfDataRow];
+            }];
+        
+        [[NSRunLoop mainRunLoop] addTimer:timerRepeat forMode:NSDefaultRunLoopMode];
+        [timerRepeat fire];
+
     }
     else if ( sender == self.buttonVolumeDecrease ) {
-        [self.delegate onBrightnessDecreasePressed:self.numberOfDataRow];
+        //[self.delegate onBrightnessDecreasePressed:self.numberOfDataRow];
+        timerRepeat = [NSTimer timerWithTimeInterval:(NSTimeInterval)0.1 repeats:YES block:^(NSTimer *timer) {
+            [self.delegate onBrightnessDecreasePressed:self.numberOfDataRow];
+        }];
+        
+        [[NSRunLoop mainRunLoop] addTimer:timerRepeat forMode:NSDefaultRunLoopMode];
+        [timerRepeat fire];
     }
+   // NSLog(@"down");
 }
+
+- (IBAction)buttonUp:(id)sender {
+    [timerRepeat invalidate];
+    NSLog(@"up");
+}
+
+- (IBAction)buttonCancel:(id)sender {
+    [timerRepeat invalidate];
+    NSLog(@"cancel");
+}
+
 
 - (void)prepareForReuse {
     [super prepareForReuse];
