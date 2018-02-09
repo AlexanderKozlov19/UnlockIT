@@ -77,8 +77,6 @@
     
     [self setupTableViewSelectors:YES];
     
-    CGPoint rectt = self.knownDevicesTable.contentOffset;
-    
     //---- start Bluetooth
     [presenter startBluetooth];
 
