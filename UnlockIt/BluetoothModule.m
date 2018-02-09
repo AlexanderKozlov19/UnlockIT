@@ -59,8 +59,8 @@
 
 - (void) centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
     
-    if ( scanOnlyForLocks && !( [peripheral.name isEqualToString:@"Servo Control"] /*|| [peripheral.name containsString:@"SuperSafe"] */) )
-        return;
+ //   if ( scanOnlyForLocks && !( [peripheral.name isEqualToString:@"Servo Control"] || [peripheral.name containsString:@"SuperSafe"] ) )
+ //       return;
     
     BOOL isPeripheralExist = false;
     
@@ -104,6 +104,7 @@
 };
 
 - (void) centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DisconnectPeriphperal" object:peripheral ];
     NSLog(@"didDisconnectPeripheral");
 
 };
@@ -148,7 +149,7 @@
                 break;
             }
     
-    if ( [service.UUID.UUIDString isEqualToString:@"180F"])
+    if ( [service.UUID.UUIDString isEqualToString:@"180F"]) // Battery Level
         for ( CBCharacteristic *characteristic in service.characteristics )
             if ( [characteristic.UUID.UUIDString isEqualToString:@"2A19"]) {
                 [peripheral readValueForCharacteristic:characteristic];
@@ -180,6 +181,7 @@
 - (void)peripheral:(CBPeripheral *)peripheral didUpdateValueForCharacteristic:(CBCharacteristic *)characteristic error:(nullable NSError *)error {
     if ( [characteristic.UUID.UUIDString isEqualToString:@"2A19"]) {
         NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:peripheral.identifier.UUIDString, @"UUID", characteristic.value, @"value", nil];
+        NSLog(@"characteristic value %@", characteristic.value);
         [[NSNotificationCenter defaultCenter] postNotificationName:@"BatteryLevel" object:dictionary ];
     }
     NSLog(@"value updated");
@@ -229,10 +231,37 @@
     
     scanOnlyForLocks = onlyLocks;
     
-    [centralManager scanForPeripheralsWithServices:nil options:nil];
+    NSDictionary *options = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"CBCentralManagerScanOptionAllowDuplicatesKey", nil];
+    
+    CBUUID *uuid = [CBUUID UUIDWithString:@"0x1812"];
+    
+    [centralManager scanForPeripheralsWithServices:@[uuid] options:options];
     isScanningBLE = YES;
     
     NSLog(@"Bluetooth: startScan");
+    
+    NSArray *arrayConnected = [centralManager retrieveConnectedPeripheralsWithServices:@[uuid]];
+    
+    if ( ( arrayConnected != nil ) && ( [arrayConnected count] > 0) ) {
+        for ( CBPeripheral *peripheral in arrayConnected ) {
+            if ( peripheral.state != CBPeripheralStateConnected) {
+
+                    [peripheral setDelegate:self];
+                    
+                    [centralManager connectPeripheral:peripheral options:nil];
+                    
+                    NSMutableDictionary *peripheralDict = [[NSMutableDictionary alloc] init];
+                    [peripheralDict setObject:peripheral forKey:@"CBPeripheral"];
+                    
+                    [peripheralsBLE addObject:peripheralDict];
+                
+            }
+        }
+        
+    }
+    NSLog( @"%@", arrayConnected);
+    
+    
     
 }
 
@@ -309,6 +338,28 @@
                         if ( [characteristic.UUID.UUIDString isEqualToString:@"2A58"]) {
                             NSData *data = [NSData dataWithBytes: &brightnessValue length: sizeof(brightnessValue)];
                             [peripheral writeValue:data forCharacteristic:characteristic type:CBCharacteristicWriteWithResponse];
+                        }
+                    }
+                }
+                
+            }
+            break;
+        }
+    }
+    
+}
+
+-(void)readBatteryLevel:(NSString*)uuid {
+    for ( NSMutableDictionary *dict in peripheralsBLE ) {
+        CBPeripheral *peripheral = dict[@"CBPeripheral"];
+        if ( [peripheral.identifier.UUIDString isEqualToString:uuid]) {
+            
+            for ( CBService *serice in peripheral.services ) {
+                if ( [serice.UUID.UUIDString isEqualToString:@"180F"]) {
+                    for ( CBCharacteristic *characteristic in serice.characteristics ) {
+                        if ( [characteristic.UUID.UUIDString isEqualToString:@"2A19"]) {
+                             [peripheral readValueForCharacteristic:characteristic];
+                            
                         }
                     }
                 }

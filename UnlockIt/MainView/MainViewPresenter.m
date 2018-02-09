@@ -99,6 +99,11 @@
                                                  selector: @selector(onBatteryLevel:)
                                                      name: @"BatteryLevel"
                                                    object: nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(onDisconnectPeripheral:)
+                                                     name: @"DisconnectPeriphperal"
+                                                   object: nil];
  
     }
     return self;
@@ -288,10 +293,11 @@
     }
     
     if ( foundLock ) {
-        NSData *dataBatteryLevel = dictionaryIn[@"BatteryLevel"];
+        NSData *dataBatteryLevel = dictionaryIn[@"value"];
         unsigned char valueByte;
         [dataBatteryLevel getBytes:&valueByte length:sizeof(valueByte)];
         NSNumber *value = [NSNumber numberWithUnsignedChar:valueByte];
+        NSLog(@"onBatteryLevel: %@", value );
         [dictionary setObject:value forKey:@"BatteryLevel"];
         [view updateTable];
     }
@@ -308,6 +314,31 @@
     else {
         [view startLockAnimation];
         [view updateLockStatus:@"Unlocked"];
+    }
+    
+    
+}
+
+-(void)onDisconnectPeripheral:(NSNotification*)data {
+    CBPeripheral *peripheral = data.object;
+    NSMutableDictionary *dictionary = nil;
+    BOOL foundLock = false;
+    
+    for ( dictionary in devicesArray )  {
+        if ( [dictionary[@"UUID"] isEqualToString:peripheral.identifier.UUIDString ] ) {
+            foundLock = true;
+            break;
+        }
+    }
+    
+    if ( foundLock ) {
+        [dictionary setObject:@NO  forKey:@"active"];
+        [dictionary setObject:@NO forKey:@"UnlockAvailable"];
+        [dictionary setObject:@NO forKey:@"BrightnessAvailable"];
+        [dictionary removeObjectForKey:@"RSSI"];
+        [dictionary removeObjectForKey:@"BatteryLevel"];
+        [self showActiveLocksCount];
+        [view updateTable];
     }
     
     
@@ -408,12 +439,16 @@
                 [[BluetoothModule SharedBluetoothModule] unlockIt:dictionary[@"UUID"]];
                 
                 [view resetCellAfterUnlock:number];
+                
+                [[BluetoothModule SharedBluetoothModule] readBatteryLevel:dictionary[@"UUID"]];
             } else {
                 NSLog(@"TouchID error: %@", error.description );
                 if ( biometryType == 1)
                     [view stopFingerPrintAnimation];
                 [laContext invalidate];
                 [view resetCellAfterUnlock:number];
+                NSMutableDictionary *dictionary = [showingDevicesArray objectAtIndex:number];
+                [[BluetoothModule SharedBluetoothModule] readBatteryLevel:dictionary[@"UUID"]];
             }
         });
     }];

@@ -27,6 +27,7 @@
 
 -(void)unlockIt:(NSString*)uuid;
 -(void)chooseBrightness:(short)brightnessValue forLock:(NSString*)uuid;
+-(void)readBatteryLevel:(NSString*)uuid;
 
 -(void)forgetDeviceWithUUID:(NSString*)uuid;
 @property (nonatomic, strong) NSMutableArray *peripheralsBLE;

@@ -77,6 +77,8 @@
     
     [self setupTableViewSelectors:YES];
     
+    CGPoint rectt = self.knownDevicesTable.contentOffset;
+    
     //---- start Bluetooth
     [presenter startBluetooth];
 
@@ -389,6 +391,10 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 60.0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 0.0;
 }
 
 
